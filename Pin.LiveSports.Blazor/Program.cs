@@ -32,7 +32,7 @@ namespace Pin.LiveSports.Blazor
 
             app.UseRouting();
 
-            app.MapHub<SportHub>("/sporthub");
+            app.MapHub<BoxingHub>("/sporthub");
 
             app.MapBlazorHub();
             app.MapFallbackToPage("/_Host");
