@@ -20,12 +20,19 @@ namespace Pin.LiveSports.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<BoxingMatch>()
-                .HasMany(m => m.Fighters)
-                .WithMany(f => f.AssignedMatches);
+                .HasOne(bm => bm.FighterBlueTeam)
+                .WithMany(f => f.AssignedMatches)
+                .HasForeignKey(bm => bm.FighterBlueTeamId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<BoxingMatch>()
+                .HasOne(bm => bm.FighterRedTeam)
+                .WithMany(f => f.AssignedMatches)
+                .HasForeignKey(bm => bm.FighterRedTeamId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Fighter>()
-                .HasMany(f => f.AssignedMatches)
-                .WithMany(m => m.Fighters);
+                .HasMany(f => f.AssignedMatches);
 
             DataSeeder.Seed(modelBuilder);
         }
