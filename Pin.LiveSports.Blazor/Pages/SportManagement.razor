@@ -1,14 +1,15 @@
 ﻿@page "/sportmanagement"
+@using Pin.LiveSports.Blazor.Components
 @inject ICrudService<Fighter> fighterCrudService;
 
 <h3>SportManagement</h3>
 
 <h5>All fighters</h5>
 
-<FighterList FighterList = TODOPARAMETER></FighterList>
+<FighterList Fighters=allFighters ></FighterList>
 
 @code {
-    private List<Fighter> allFighters;
+    private Fighter[] allFighters;
 
     protected override async Task OnInitializedAsync()
     {

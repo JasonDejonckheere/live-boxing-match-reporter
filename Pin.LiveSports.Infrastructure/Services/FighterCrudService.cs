@@ -33,7 +33,10 @@ namespace Pin.LiveSports.Infrastructure.Services
 
         public async Task<Fighter[]> GetAllAsync()
         {
-            return await _db.Fighters.ToArrayAsync<Fighter>();
+            return await _db
+                .Fighters
+                .Include(f => f.AssignedMatches)
+                .ToArrayAsync<Fighter>();
         }
 
         public async Task UpdateAsync(Fighter entity)
