@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Pin.LiveSports.Blazor.Data;
+using Pin.LiveSports.Blazor.Hubs;
 
 namespace Pin.LiveSports.Blazor
 {
@@ -30,6 +31,8 @@ namespace Pin.LiveSports.Blazor
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.MapHub<SportHub>("/sporthub");
 
             app.MapBlazorHub();
             app.MapFallbackToPage("/_Host");
