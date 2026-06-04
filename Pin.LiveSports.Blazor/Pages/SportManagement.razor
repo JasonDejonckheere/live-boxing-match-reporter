@@ -4,28 +4,39 @@
 
 <h3>SportManagement</h3>
 
-<h5>All fighters</h5>
+<div>
 
-@if(currentFighter == null)
-{
-    <FighterList    Fighters="allFighters"
-                    OnAdd="AddFighter"
-                    OnEdit="EditFighter"
-                    OnDelete="DeleteFighter">
-    </FighterList>    
-}
-else
-{
-    <FighterForm    Fighter="currentFighter"
-                    OnSave=""
-                    OnCancel="Refresh">
-    </FighterForm>
-}
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert alert-danger">
+            @errorMessage
+        </div>
+    }
+
+
+    @if (currentFighter == null)
+    {
+        <FighterList Fighters="allFighters"
+                     OnAdd="AddFighter"
+                     OnEdit="EditFighter"
+                     OnDelete="DeleteFighter">
+        </FighterList>
+    }
+    else
+    {
+        <FighterForm Fighter="currentFighter"
+                     OnSave="SaveFighter"
+                     OnCancel="Refresh">
+        </FighterForm>
+    }
+</div>
+
 
 
 @code {
     private Fighter currentFighter;
     private Fighter[] allFighters;
+    private string errorMessage;
 
     protected override async Task OnInitializedAsync()
     {
@@ -56,9 +67,23 @@ else
 
     public async Task SaveFighter(Fighter fighter)
     {
-        if(fighter.Id == Guid.Empty)
+        try
         {
-            
+            if (fighter.Id == Guid.Empty)
+            {
+                await fighterCrudService.AddAsync(fighter);
+            }
+            else
+            {
+                await fighterCrudService.UpdateAsync(fighter);
+            }
+
+            await Refresh();
         }
+        catch (Exception ex)
+        {
+            errorMessage = $"Failed to save: {ex.Message}";
+        }
+        
     }
 }

@@ -21,6 +21,7 @@ namespace Pin.LiveSports.Infrastructure.Services
 
         public async Task AddAsync(Fighter entity)
         {
+            entity.Id = Guid.NewGuid();
             await _db.Fighters.AddAsync(entity);
             await _db.SaveChangesAsync();
         }
