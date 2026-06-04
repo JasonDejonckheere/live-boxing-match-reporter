@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pin.LiveSports.Infrastructure.Services.Interfaces
+namespace Pin.LiveSports.Core.Interfaces
 {
     public interface ICrudService<T>
     {

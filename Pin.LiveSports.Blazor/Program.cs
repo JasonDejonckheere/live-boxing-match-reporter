@@ -6,7 +6,7 @@ using Pin.LiveSports.Blazor.Hubs;
 using Pin.LiveSports.Core.Entities;
 using Pin.LiveSports.Infrastructure.Data;
 using Pin.LiveSports.Infrastructure.Services;
-using Pin.LiveSports.Infrastructure.Services.Interfaces;
+using Pin.LiveSports.Core.Interfaces;
 
 namespace Pin.LiveSports.Blazor
 {

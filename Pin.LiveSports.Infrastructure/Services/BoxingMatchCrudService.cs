@@ -1,6 +1,6 @@
 ﻿using Pin.LiveSports.Core.Entities;
 using Pin.LiveSports.Infrastructure.Data;
-using Pin.LiveSports.Infrastructure.Services.Interfaces;
+using Pin.LiveSports.Core.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
