@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Pin.LiveSports.Infrastructure.Services
 {
-    public class BoxingMatchService : ICrudService<BoxingMatch>
+    public class BoxingMatchCrudService : ICrudService<BoxingMatch>
     {
         private readonly BoxingDbContext _db;
 
-        public BoxingMatchService(BoxingDbContext db)
+        public BoxingMatchCrudService(BoxingDbContext db)
         {
             _db = db;
         }

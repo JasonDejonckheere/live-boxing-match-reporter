@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
 using Pin.LiveSports.Blazor.Data;
 using Pin.LiveSports.Blazor.Hubs;
+using Pin.LiveSports.Core.Entities;
 using Pin.LiveSports.Infrastructure.Data;
+using Pin.LiveSports.Infrastructure.Services;
+using Pin.LiveSports.Infrastructure.Services.Interfaces;
 
 namespace Pin.LiveSports.Blazor
 {
@@ -20,6 +23,11 @@ namespace Pin.LiveSports.Blazor
 
             builder.Services.AddDbContext<BoxingDbContext>(options => 
                 options.UseSqlServer(connectionString: builder.Configuration.GetConnectionString("BoxingDb")));
+
+            //di
+            builder.Services.AddScoped<ICrudService<Fighter>, FighterCrudService>();
+            builder.Services.AddScoped<ICrudService<BoxingMatch>, BoxingMatchCrudService>();
+
 
 
             var app = builder.Build();
