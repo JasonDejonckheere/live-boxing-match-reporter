@@ -1,0 +1,60 @@
+﻿<h3 class="mt-4">All matches</h3>
+
+<button class="btn btn-primary mb-4 mt-4" @onclick="OnAdd">Add Match</button>
+@if (Matches is not null)
+{
+    <table class="table table-striped table-dark">
+        <thead>
+            <tr>
+                <th scope="col">Match #</th>
+                <th scope="col">Red team fighter</th>
+                <th scope="col">Blue team fighter</th>
+                <th scope="col">Delete</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            @for(int i = 0; i < Matches.Length; i++)
+            {
+                <td>@(i + 1)</td>
+
+                @foreach(var fighter in Matches[i].Fighters)
+                {
+                    <td>@fighter.Firstname @fighter.Lastname (@fighter.WeightClass)</td>
+                }
+
+                <td>
+                    <button class="btn btn-warning" @onclick="e => OnEdit.InvokeAsync(Matches[i])">Edit</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger" @onclick="e => OnDelete.InvokeAsync(Matches[i])">Delete</button>
+                </td>
+            }
+
+                    
+            }
+            </tr>
+        </tbody>
+    </table>
+}
+else
+{
+    <h5>No matches have been found</h5>
+}
+
+
+@code {
+    [Parameter]
+    public BoxingMatch[] Matches { get; set; }
+
+    [Parameter]
+    public EventCallback OnAdd { get; set; }
+
+    [Parameter]
+    public EventCallback<BoxingMatch> OnEdit { get; set; }
+
+    [Parameter]
+    public EventCallback<BoxingMatch> OnDelete { get; set; }
+
+}
