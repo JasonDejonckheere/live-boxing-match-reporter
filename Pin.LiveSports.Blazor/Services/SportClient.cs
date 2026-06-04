@@ -2,11 +2,11 @@
 
 namespace Pin.LiveSports.Blazor.Services
 {
-    public class SportClient
+    public class BoxClient
     {
         protected HubConnection connection;
 
-        public SportClient()
+        public BoxClient()
         {
             connection = new HubConnectionBuilder()
                 .WithUrl("https://localhost:7005/sporthub")
