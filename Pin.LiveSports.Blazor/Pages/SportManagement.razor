@@ -6,13 +6,59 @@
 
 <h5>All fighters</h5>
 
-<FighterList Fighters=allFighters ></FighterList>
+@if(currentFighter == null)
+{
+    <FighterList    Fighters="allFighters"
+                    OnAdd="AddFighter"
+                    OnEdit="EditFighter"
+                    OnDelete="DeleteFighter">
+    </FighterList>    
+}
+else
+{
+    <FighterForm    Fighter="currentFighter"
+                    OnSave=""
+                    OnCancel="Refresh">
+    </FighterForm>
+}
+
 
 @code {
+    private Fighter currentFighter;
     private Fighter[] allFighters;
 
     protected override async Task OnInitializedAsync()
     {
+        await Refresh();
+    }
+
+    public async Task Refresh()
+    {
         allFighters = await fighterCrudService.GetAllAsync();
+        currentFighter = null;
+    }
+
+    public void AddFighter()
+    {
+        this.currentFighter = new Fighter();
+    }
+
+    public async Task EditFighter(Fighter fighter)
+    {
+        this.currentFighter = await fighterCrudService.GetByIdAsync(fighter.Id);
+    }
+
+    public async Task DeleteFighter(Fighter fighter)
+    {
+        await fighterCrudService.DeleteAsync(fighter);
+        await Refresh();
+    }
+
+    public async Task SaveFighter(Fighter fighter)
+    {
+        if(fighter.Id == Guid.Empty)
+        {
+            
+        }
     }
 }

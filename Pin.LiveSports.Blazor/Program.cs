@@ -25,8 +25,8 @@ namespace Pin.LiveSports.Blazor
                 options.UseSqlServer(connectionString: builder.Configuration.GetConnectionString("BoxingDb")));
 
             //di
-            builder.Services.AddScoped<ICrudService<Fighter>, FighterCrudService>();
-            builder.Services.AddScoped<ICrudService<BoxingMatch>, BoxingMatchCrudService>();
+            builder.Services.AddScoped<ICrudService<Fighter>, FighterDbCrudService>();
+            builder.Services.AddScoped<ICrudService<BoxingMatch>, BoxingMatchDbCrudService>();
 
 
 

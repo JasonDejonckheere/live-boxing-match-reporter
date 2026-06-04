@@ -1,5 +1,6 @@
 ﻿<h3>FighterList</h3>
 
+<button class="btn btn-primary" @onclick="OnAdd">Add Fighter</button>
 @if(Fighters is not null)
 {
     <table class="table table-striped table-dark">
@@ -9,6 +10,8 @@
                 <th scope="col">Lastname</th>
                 <th scope="col">Weight Class</th>
                 <th scope="col">Amount of matches</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
 
             </tr>
         </thead>
@@ -20,6 +23,12 @@
                     <td>@fighter.Lastname</td>
                     <td>@fighter.WeightClass.ToString()</td>
                     <td>@fighter.AssignedMatches.Count()</td>
+                    <td>
+                        <button class="btn btn-warning" @onclick="e => OnEdit.InvokeAsync(fighter)">Edit</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" @onclick="e => OnDelete.InvokeAsync(fighter)">Delete</button>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -34,4 +43,14 @@ else
 @code {
     [Parameter]
     public Fighter[] Fighters { get; set; }
+
+    [Parameter]
+    public EventCallback OnAdd { get; set; }
+
+    [Parameter]
+    public EventCallback<Fighter> OnEdit { get; set; }
+
+    [Parameter]
+    public EventCallback<Fighter> OnDelete { get; set; }
+
 }

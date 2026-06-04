@@ -1,0 +1,44 @@
+﻿@using Pin.LiveSports.Core.Enums
+
+<EditForm Model="@Fighter" OnValidSubmit="@(e => OnSave.InvokeAsync(Fighter))">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <label for="firstname">First name: </label>
+        <InputText id="firstname" class="form-control"
+                   @bind-Value="Fighter.Firstname" />
+        <ValidationMessage For="@(() => Fighter.Firstname)" />
+    </div>
+
+    <div class="form-group">
+        <label for="lastname">Last name: </label>
+        <InputText id="lastname" class="form-control"
+                   @bind-Value="Fighter.Lastname" />
+        <ValidationMessage For="@(() => Fighter.Lastname)" />
+    </div>
+
+    <div class="form-group">
+        <label for="description">Description: </label>
+        <InputSelect @bind-Value="Fighter.WeightClass">
+            @foreach(var weightType in Enum.GetValues<WeightType>())
+            {
+                <option value="@weightType">@weightType</option>
+            }
+        </InputSelect>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="button" class="btn btn-warning" @onclick="OnCancel">Cancel</button>
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public Fighter Fighter { get; set; }
+
+    [Parameter]
+    public EventCallback<Fighter> OnSave { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+}
+}
