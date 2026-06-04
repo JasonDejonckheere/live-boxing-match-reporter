@@ -4,21 +4,25 @@
     <ValidationSummary />
 
     <div class="form-group">
-        <label for="fighters">Blue team fighter: </label>
-        <InputSelect @bind-Value="Match.FighterBlueTeam" >
-            @foreach (var fighter in AvailableFighters)
-            {
-                <option value="@fighter">@fighter.Firstname @fighter.Lastname (@fighter.WeightClass.ToString())</option>
-            }
-        </InputSelect>
+        <label for="fighterblue">Blue team fighter: </label>
 
-        <label for="fighters">Red team fighter: </label>
-        <InputSelect @bind-Value="Match.FighterRedTeam">
+        <InputSelect TValue="Guid" @bind-Value="Match.FighterBlueTeamId">
             @foreach (var fighter in AvailableFighters)
             {
-                <option value="@fighter">@fighter.Firstname @fighter.Lastname (@fighter.WeightClass.ToString())</option>
+                <option value="@fighter.Id">@fighter.Firstname @fighter.Lastname (@fighter.WeightClass.ToString())</option>
             }
         </InputSelect>
+        <ValidationMessage For="@(() => Match.FighterBlueTeam)" />
+
+        <label for="fighterred">Red team fighter: </label>
+        <InputSelect TValue="Guid" @bind-Value="Match.FighterRedTeamId">
+            @foreach (var fighter in AvailableFighters)
+            {
+                <option value="@fighter.Id">@fighter.Firstname @fighter.Lastname (@fighter.WeightClass.ToString())</option>
+            }
+        </InputSelect>
+        <ValidationMessage For="@(() => Match.FighterRedTeam)" />
+
 
     </div>
     <button type="submit" class="btn btn-primary">Save</button>

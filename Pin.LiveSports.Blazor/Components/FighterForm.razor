@@ -18,13 +18,14 @@
     </div>
 
     <div class="form-group">
-        <label for="description">Description: </label>
+        <label for="weightclass">Weight class: </label>
         <InputSelect @bind-Value="Fighter.WeightClass">
             @foreach(var weightType in Enum.GetValues<WeightType>())
             {
                 <option value="@weightType">@weightType</option>
             }
         </InputSelect>
+        <ValidationMessage For="@(() => Fighter.WeightClass)" />
     </div>
     <button type="submit" class="btn btn-primary">Save</button>
     <button type="button" class="btn btn-warning" @onclick="OnCancel">Cancel</button>
