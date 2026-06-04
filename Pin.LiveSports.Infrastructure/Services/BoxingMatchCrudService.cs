@@ -32,9 +32,9 @@ namespace Pin.LiveSports.Infrastructure.Services
             await _db.SaveChangesAsync();
         }
 
-        public async Task<List<BoxingMatch>> GetAllAsync()
+        public async Task<BoxingMatch[]> GetAllAsync()
         {
-            return await _db.BoxingMatches.ToListAsync<BoxingMatch>();
+            return await _db.BoxingMatches.ToArrayAsync<BoxingMatch>();
         }
 
         public async Task UpdateAsync(BoxingMatch entity)

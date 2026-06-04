@@ -8,10 +8,10 @@
 <FighterList FighterList = TODOPARAMETER></FighterList>
 
 @code {
-    private Fighter[] allFighters;
+    private List<Fighter> allFighters;
 
     protected override async Task OnInitializedAsync()
     {
-        // allFighters = fighterCrudService.GetAll().ToArray();
+        allFighters = await fighterCrudService.GetAllAsync();
     }
 }

@@ -31,9 +31,9 @@ namespace Pin.LiveSports.Infrastructure.Services
             await _db.SaveChangesAsync();
         }
 
-        public async Task<List<Fighter>> GetAllAsync()
+        public async Task<Fighter[]> GetAllAsync()
         {
-            return await _db.Fighters.ToListAsync<Fighter>();
+            return await _db.Fighters.ToArrayAsync<Fighter>();
         }
 
         public async Task UpdateAsync(Fighter entity)
