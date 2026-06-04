@@ -18,7 +18,7 @@ namespace Pin.LiveSports.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            DataSeeder.Seed(modelBuilder);
         }
 
 
