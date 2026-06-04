@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pin.LiveSports.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using Pin.LiveSports.Infrastructure.Data;
 namespace Pin.LiveSports.Infrastructure.Migrations
 {
     [DbContext(typeof(BoxingDbContext))]
-    partial class BoxingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260604135654_UpdateManyToManyData")]
+    partial class UpdateManyToManyData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
