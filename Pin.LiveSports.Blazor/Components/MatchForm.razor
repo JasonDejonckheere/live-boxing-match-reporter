@@ -1,0 +1,29 @@
+﻿
+<EditForm Model="@Match" OnValidSubmit="@(e => OnSave.InvokeAsync(Match))">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label for="fighters">Fighters: </label>
+        <InputSelect @bind-Value="Match.Fighters" >
+            @foreach (var fighter in Match.Fighters)
+            {
+                <option value="@fighter">@fighter.Firstname @fighter.Lastname (@fighter.WeightClass)</option>
+            }
+        </InputSelect>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="button" class="btn btn-warning" @onclick="OnCancel">Cancel</button>
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public BoxingMatch Match { get; set; }
+
+    [Parameter]
+    public EventCallback<BoxingMatch> OnSave { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+}
