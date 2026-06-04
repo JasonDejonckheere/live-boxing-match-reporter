@@ -1,4 +1,5 @@
 ﻿using Pin.LiveSports.Core.Entities;
+using Pin.LiveSports.Infrastructure.Data;
 using Pin.LiveSports.Infrastructure.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,24 +11,34 @@ namespace Pin.LiveSports.Infrastructure.Services
 {
     public class FighterCrudService : ICrudService<Fighter>
     {
-        public Task AddAsync(Fighter entity)
+        private readonly BoxingDbContext _db;
+
+        public FighterCrudService(BoxingDbContext db)
         {
-            throw new NotImplementedException();
+            _db = db;
         }
 
-        public Task DeleteAsync(Fighter entity)
+        public async Task AddAsync(Fighter entity)
         {
-            throw new NotImplementedException();
+            await _db.Fighters.AddAsync(entity);
+            await _db.SaveChangesAsync();
         }
 
-        public Task GetAllAsync()
+        public async Task DeleteAsync(Fighter entity)
         {
-            throw new NotImplementedException();
+            _db.Fighters.Remove(entity);
+            await _db.SaveChangesAsync();
         }
 
-        public Task UpdateAsync(Fighter entity)
+        public IEnumerable<Fighter> GetAll()
         {
-            throw new NotImplementedException();
+            return _db.Fighters.AsEnumerable<Fighter>();
+        }
+
+        public async Task UpdateAsync(Fighter entity)
+        {
+            _db.Fighters.Update(entity);
+            await _db.SaveChangesAsync();
         }
     }
 }

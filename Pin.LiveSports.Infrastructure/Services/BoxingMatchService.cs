@@ -1,6 +1,8 @@
 ﻿using Pin.LiveSports.Core.Entities;
+using Pin.LiveSports.Infrastructure.Data;
 using Pin.LiveSports.Infrastructure.Services.Interfaces;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,24 +12,34 @@ namespace Pin.LiveSports.Infrastructure.Services
 {
     public class BoxingMatchService : ICrudService<BoxingMatch>
     {
-        public Task AddAsync(BoxingMatch entity)
+        private readonly BoxingDbContext _db;
+
+        public BoxingMatchService(BoxingDbContext db)
         {
-            throw new NotImplementedException();
+            _db = db;
         }
 
-        public Task DeleteAsync(BoxingMatch entity)
+        public async Task AddAsync(BoxingMatch entity)
         {
-            throw new NotImplementedException();
+            await _db.BoxingMatches.AddAsync(entity);
+            await _db.SaveChangesAsync();
         }
 
-        public Task GetAllAsync()
+        public async Task DeleteAsync(BoxingMatch entity)
         {
-            throw new NotImplementedException();
+            _db.BoxingMatches.Remove(entity);
+            await _db.SaveChangesAsync();
         }
 
-        public Task UpdateAsync(BoxingMatch entity)
+        public IEnumerable<BoxingMatch> GetAll()
         {
-            throw new NotImplementedException();
+            return _db.BoxingMatches.AsEnumerable<BoxingMatch>();
+        }
+
+        public async Task UpdateAsync(BoxingMatch entity)
+        {
+            _db.BoxingMatches.Update(entity);
+            await _db.SaveChangesAsync();
         }
     }
 }

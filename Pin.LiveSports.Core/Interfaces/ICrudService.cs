@@ -8,7 +8,7 @@ namespace Pin.LiveSports.Infrastructure.Services.Interfaces
 {
     public interface ICrudService<T>
     {
-        Task GetAllAsync();
+        IEnumerable<T> GetAll();
         Task AddAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
