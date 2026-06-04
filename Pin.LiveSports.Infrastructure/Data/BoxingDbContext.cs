@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Pin.LiveSports.Infrastructure.Data
 {
-    internal class BoxingDbContext : DbContext
+    public class BoxingDbContext : DbContext
     {
         //todo entities
         public DbSet<Fighter> Fighters { get; set; }
