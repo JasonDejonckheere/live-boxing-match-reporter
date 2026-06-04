@@ -11,11 +11,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pin.LiveSports.Infrastructure.Services
 {
-    public class BoxingMatchCrudService : ICrudService<BoxingMatch>
+    public class BoxingMatchDbCrudService : ICrudService<BoxingMatch>
     {
         private readonly BoxingDbContext _db;
 
-        public BoxingMatchCrudService(BoxingDbContext db)
+        public BoxingMatchDbCrudService(BoxingDbContext db)
         {
             _db = db;
         }
@@ -35,6 +35,11 @@ namespace Pin.LiveSports.Infrastructure.Services
         public async Task<BoxingMatch[]> GetAllAsync()
         {
             return await _db.BoxingMatches.ToArrayAsync<BoxingMatch>();
+        }
+
+        public async Task<BoxingMatch> GetByIdAsync(Guid id)
+        {
+            return await _db.BoxingMatches.FirstOrDefaultAsync(bm => bm.Id == id);
         }
 
         public async Task UpdateAsync(BoxingMatch entity)
