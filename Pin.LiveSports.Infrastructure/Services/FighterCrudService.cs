@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Pin.LiveSports.Infrastructure.Services
 {
@@ -30,9 +31,9 @@ namespace Pin.LiveSports.Infrastructure.Services
             await _db.SaveChangesAsync();
         }
 
-        public IEnumerable<Fighter> GetAll()
+        public async Task<List<Fighter>> GetAllAsync()
         {
-            return _db.Fighters.AsEnumerable<Fighter>();
+            return await _db.Fighters.ToListAsync<Fighter>();
         }
 
         public async Task UpdateAsync(Fighter entity)

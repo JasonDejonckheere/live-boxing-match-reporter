@@ -19,4 +19,8 @@
     <ProjectReference Include="..\Pin.LiveSports.Infrastructure\Pin.LiveSports.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>
