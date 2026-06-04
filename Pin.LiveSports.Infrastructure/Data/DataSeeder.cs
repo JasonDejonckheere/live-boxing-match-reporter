@@ -28,9 +28,15 @@ namespace Pin.LiveSports.Infrastructure.Data
 
             var matches = new[]
             {
-                new BoxingMatch{ Id = Guid.NewGuid(), FighterOneId = fighters[0].Id, FighterTwoId = fighters[1].Id },
-                new BoxingMatch{ Id = Guid.NewGuid(), FighterOneId = fighters[2].Id, FighterTwoId = fighters[3].Id },
-                new BoxingMatch{ Id = Guid.NewGuid(), FighterOneId = fighters[4].Id, FighterTwoId = fighters[5].Id },
+                new BoxingMatch{ Id = Guid.NewGuid(), 
+                    //FighterOneId = fighters[0].Id, FighterTwoId = fighters[1].Id 
+                },
+                new BoxingMatch{ Id = Guid.NewGuid(),
+                    //FighterOneId = fighters[2].Id, FighterTwoId = fighters[3].Id 
+                },
+                new BoxingMatch{ Id = Guid.NewGuid(), 
+                    //FighterOneId = fighters[4].Id, FighterTwoId = fighters[5].Id 
+                },
             };
 
             modelBuilder.Entity<Fighter>().HasData(fighters);

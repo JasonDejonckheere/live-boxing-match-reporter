@@ -13,5 +13,6 @@ namespace Pin.LiveSports.Core.Entities
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public WeightType WeightClass { get; set; }
+        public ICollection<BoxingMatch> AssignedMatches { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Pin.LiveSports.Infrastructure.Data
@@ -18,6 +19,14 @@ namespace Pin.LiveSports.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<BoxingMatch>()
+                .HasMany(m => m.Fighters)
+                .WithMany(f => f.AssignedMatches);
+
+            modelBuilder.Entity<Fighter>()
+                .HasMany(f => f.AssignedMatches)
+                .WithMany(m => m.Fighters);
+
             DataSeeder.Seed(modelBuilder);
         }
 

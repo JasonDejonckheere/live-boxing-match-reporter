@@ -9,9 +9,8 @@ namespace Pin.LiveSports.Core.Entities
     public class BoxingMatch
     {
         public Guid Id { get; set; }
-        public Guid FighterOneId { get; set; }
-        public Guid FighterTwoId { get; set; }
         public Guid? WinningFighterId { get; set; }
         public bool IsFinished => WinningFighterId != null;
+        public ICollection<Fighter> Fighters { get; set; }
     }
 }

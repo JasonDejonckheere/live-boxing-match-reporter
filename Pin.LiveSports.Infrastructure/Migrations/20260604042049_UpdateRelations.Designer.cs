@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pin.LiveSports.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using Pin.LiveSports.Infrastructure.Data;
 namespace Pin.LiveSports.Infrastructure.Migrations
 {
     [DbContext(typeof(BoxingDbContext))]
-    partial class BoxingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260604042049_UpdateRelations")]
+    partial class UpdateRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,15 +56,15 @@ namespace Pin.LiveSports.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0c0d65e8-400b-4e2e-b3ed-10b2d6c0eb6f")
+                            Id = new Guid("6facfdcb-229d-4463-a5fc-a21e698d7b8b")
                         },
                         new
                         {
-                            Id = new Guid("996159ef-db19-47a2-999f-d17a7fb669d6")
+                            Id = new Guid("924a742c-a558-44c2-93dd-933526669e9c")
                         },
                         new
                         {
-                            Id = new Guid("177b8f2f-aaf9-4b74-984a-2dea3a8829b6")
+                            Id = new Guid("e0a5c2bb-658e-437a-9441-1ecfc5c2745d")
                         });
                 });
 
@@ -89,42 +92,42 @@ namespace Pin.LiveSports.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("e84a0bee-047b-400c-9e71-0c3c7b6e2735"),
+                            Id = new Guid("8bcd2113-9eb3-4a51-9811-334804296bbc"),
                             Firstname = "John",
                             Lastname = "Wick",
                             WeightClass = 0
                         },
                         new
                         {
-                            Id = new Guid("989fe019-952a-401b-9ed4-5868eb6c59d0"),
+                            Id = new Guid("0925d15b-ea3a-4b9c-b487-2a036940b4c7"),
                             Firstname = "Steven",
                             Lastname = "Hawk",
                             WeightClass = 0
                         },
                         new
                         {
-                            Id = new Guid("7e177a58-5214-4e24-95e5-d6bdd36b138b"),
+                            Id = new Guid("e9e1782f-d6cd-4185-b971-d0eaf446d318"),
                             Firstname = "Bert",
                             Lastname = "Dert",
                             WeightClass = 1
                         },
                         new
                         {
-                            Id = new Guid("dc39c6fa-9ebc-49c4-9590-36588a8f7f69"),
+                            Id = new Guid("e873df57-7506-477d-9034-6a931fe4c0bf"),
                             Firstname = "Dirk",
                             Lastname = "Hirk",
                             WeightClass = 1
                         },
                         new
                         {
-                            Id = new Guid("42f061a1-1a4f-4ae4-b334-0cbb01c0299f"),
+                            Id = new Guid("25173fe0-9ebe-4e5c-a7f6-c9125feab2e8"),
                             Firstname = "Hol",
                             Lastname = "De Bol",
                             WeightClass = 2
                         },
                         new
                         {
-                            Id = new Guid("976db6d2-7b3c-4cdb-8524-7f171b8471f4"),
+                            Id = new Guid("50c7232b-dd2a-4071-a71b-b63b0537a389"),
                             Firstname = "Hank",
                             Lastname = "De Tank",
                             WeightClass = 2
