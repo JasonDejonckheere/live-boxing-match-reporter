@@ -18,6 +18,7 @@ namespace Pin.LiveSports.Core.Entities
 
 
         public Guid? WinningFighterId { get; set; }
+        public Fighter WinningFighter { get; set; }
         public bool IsFinished => WinningFighterId != null;
     }
 }

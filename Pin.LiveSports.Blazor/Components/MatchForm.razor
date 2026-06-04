@@ -4,19 +4,30 @@
     <ValidationSummary />
 
     <div class="form-group">
-        <label for="fighters">Fighters: </label>
-        @* <InputSelect @bind-Value="Match.Fighters" >
-            @foreach (var fighter in Match.Fighters)
+        <label for="fighters">Blue team fighter: </label>
+        <InputSelect @bind-Value="Match.FighterBlueTeam" >
+            @foreach (var fighter in AvailableFighters)
             {
-                <option value="@fighter">@fighter.Firstname @fighter.Lastname (@fighter.WeightClass)</option>
+                <option value="@fighter">@fighter.Firstname @fighter.Lastname (@fighter.WeightClass.ToString())</option>
             }
-        </InputSelect> *@
+        </InputSelect>
+
+        <label for="fighters">Red team fighter: </label>
+        <InputSelect @bind-Value="Match.FighterRedTeam">
+            @foreach (var fighter in AvailableFighters)
+            {
+                <option value="@fighter">@fighter.Firstname @fighter.Lastname (@fighter.WeightClass.ToString())</option>
+            }
+        </InputSelect>
+
     </div>
     <button type="submit" class="btn btn-primary">Save</button>
     <button type="button" class="btn btn-warning" @onclick="OnCancel">Cancel</button>
 </EditForm>
 
 @code {
+    [Parameter]
+    public Fighter[] AvailableFighters { get; set; }
 
     [Parameter]
     public BoxingMatch Match { get; set; }

@@ -33,7 +33,7 @@
 
     @if (currentMatch == null)
     {
-        <MatchList Matches="allmatches"
+        <MatchList   Matches="allmatches"
                      OnAdd="AddMatch"
                      OnEdit="EditMatch"
                      OnDelete="DeleteMatch">
@@ -41,10 +41,11 @@
     }
     else
     {
-        @* <FighterForm Fighter="currentFighter"
-                     OnSave="SaveFighter"
-                     OnCancel="RefreshFighter">
-        </FighterForm> *@
+        <MatchForm  Match="currentMatch"
+                    AvailableFighters="allFighters"
+                    OnSave="SaveMatch"
+                    OnCancel="RefreshMatch">
+        </MatchForm>
     }
 
 </div>
