@@ -5,12 +5,12 @@
 
     <div class="form-group">
         <label for="fighters">Fighters: </label>
-        <InputSelect @bind-Value="Match.Fighters" >
+        @* <InputSelect @bind-Value="Match.Fighters" >
             @foreach (var fighter in Match.Fighters)
             {
                 <option value="@fighter">@fighter.Firstname @fighter.Lastname (@fighter.WeightClass)</option>
             }
-        </InputSelect>
+        </InputSelect> *@
     </div>
     <button type="submit" class="btn btn-primary">Save</button>
     <button type="button" class="btn btn-warning" @onclick="OnCancel">Cancel</button>

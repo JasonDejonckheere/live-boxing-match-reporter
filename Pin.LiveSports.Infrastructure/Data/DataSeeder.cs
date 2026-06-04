@@ -28,31 +28,16 @@ namespace Pin.LiveSports.Infrastructure.Data
 
             var matches = new[]
             {
-                new BoxingMatch{ Id = Guid.NewGuid(), 
-                    //FighterOneId = fighters[0].Id, FighterTwoId = fighters[1].Id 
+                new BoxingMatch{ Id = Guid.NewGuid(), FighterBlueTeamId = fighters[0].Id, FighterRedTeamId = fighters[1].Id
                 },
-                new BoxingMatch{ Id = Guid.NewGuid(),
-                    //FighterOneId = fighters[2].Id, FighterTwoId = fighters[3].Id 
+                new BoxingMatch{ Id = Guid.NewGuid(), FighterBlueTeamId = fighters[2].Id, FighterRedTeamId = fighters[3].Id
                 },
-                new BoxingMatch{ Id = Guid.NewGuid(), 
-                    //FighterOneId = fighters[4].Id, FighterTwoId = fighters[5].Id 
+                new BoxingMatch{ Id = Guid.NewGuid(), FighterBlueTeamId = fighters[4].Id, FighterRedTeamId = fighters[5].Id
                 },
-            };
-
-            //i know this is not the cleanest way to do this but its fastest way i know + for scope of this exam i'll leave it like this
-            var boxingMatchFighters = new[]
-            {
-                new { FightersId = fighters[0].Id, AssignedMatchesId = matches[0].Id },
-                new { FightersId = fighters[1].Id, AssignedMatchesId = matches[0].Id },
-                new { FightersId = fighters[2].Id, AssignedMatchesId = matches[1].Id },
-                new { FightersId = fighters[3].Id, AssignedMatchesId = matches[1].Id },
-                new { FightersId = fighters[4].Id, AssignedMatchesId = matches[2].Id },
-                new { FightersId = fighters[5].Id, AssignedMatchesId = matches[2].Id },
             };
 
             modelBuilder.Entity<Fighter>().HasData(fighters);
             modelBuilder.Entity<BoxingMatch>().HasData(matches);
-            modelBuilder.Entity(nameof(BoxingMatch) + nameof(Fighter)).HasData(boxingMatchFighters);
 
         }
 

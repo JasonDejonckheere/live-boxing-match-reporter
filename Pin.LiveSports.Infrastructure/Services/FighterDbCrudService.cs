@@ -36,7 +36,6 @@ namespace Pin.LiveSports.Infrastructure.Services
         {
             return await _db
                 .Fighters
-                .Include(f => f.AssignedMatches)
                 .ToArrayAsync<Fighter>();
         }
 

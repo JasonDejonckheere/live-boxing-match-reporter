@@ -21,18 +21,16 @@ namespace Pin.LiveSports.Infrastructure.Data
         {
             modelBuilder.Entity<BoxingMatch>()
                 .HasOne(bm => bm.FighterBlueTeam)
-                .WithMany(f => f.AssignedMatches)
+                .WithMany()
                 .HasForeignKey(bm => bm.FighterBlueTeamId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<BoxingMatch>()
                 .HasOne(bm => bm.FighterRedTeam)
-                .WithMany(f => f.AssignedMatches)
+                .WithMany()
                 .HasForeignKey(bm => bm.FighterRedTeamId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Fighter>()
-                .HasMany(f => f.AssignedMatches);
 
             DataSeeder.Seed(modelBuilder);
         }

@@ -22,7 +22,5 @@ namespace Pin.LiveSports.Core.Entities
 
         [Required(ErrorMessage = "Last name is required")]
         public WeightType WeightClass { get; set; }
-
-        public ICollection<BoxingMatch> AssignedMatches { get; set; }
     }
 }

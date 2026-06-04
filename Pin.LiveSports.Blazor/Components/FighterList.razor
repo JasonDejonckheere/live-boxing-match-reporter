@@ -9,7 +9,6 @@
                 <th scope="col">Firstname</th>
                 <th scope="col">Lastname</th>
                 <th scope="col">Weight Class</th>
-                <th scope="col">Amount of matches</th>
                 <th scope="col">Edit</th>
                 <th scope="col">Delete</th>
 
@@ -22,7 +21,6 @@
                     <td>@fighter.Firstname</td>
                     <td>@fighter.Lastname</td>
                     <td>@fighter.WeightClass.ToString()</td>
-                    <td>@fighter.AssignedMatches.Count()</td>
                     <td>
                         <button class="btn btn-warning" @onclick="e => OnEdit.InvokeAsync(fighter)">Edit</button>
                     </td>

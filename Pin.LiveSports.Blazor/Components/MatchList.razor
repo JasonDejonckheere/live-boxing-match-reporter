@@ -19,10 +19,10 @@
             {
                 <td>@(i + 1)</td>
 
-                @foreach(var fighter in Matches[i].Fighters)
+                @* @foreach(var fighter in Matches[i].Fighters)
                 {
                     <td>@fighter.Firstname @fighter.Lastname (@fighter.WeightClass)</td>
-                }
+                } *@
 
                 <td>
                     <button class="btn btn-warning" @onclick="e => OnEdit.InvokeAsync(Matches[i])">Edit</button>
