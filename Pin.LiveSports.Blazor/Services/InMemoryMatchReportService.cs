@@ -31,9 +31,11 @@ namespace Pin.LiveSports.Blazor.Services
             }
         }
 
-        public MatchReport GetById (Guid matchId)
+        public List<BaseMatchEvent> GetEventsByMatchId (Guid matchId)
         {
-            return matchReports.FirstOrDefault(m => m.MatchId == matchId);
+            return matchReports
+                .FirstOrDefault(m => m.MatchId == matchId)
+                .MatchEvents;
         }
 
         public List<MatchReport> GetAll()

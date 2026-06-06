@@ -10,9 +10,11 @@
 <h3>Match Report</h3>
 @if(match is null)
 {
-    <div>
-        <h6>Loading matching</h6>
-    </div>
+    if(winMessage is not null)
+    {
+        <p class="text-success">@winMessage</p>
+    }
+    <NavLink href="@($"/sportmanagement")" class="btn btn-success">Back to sport management page</NavLink>
 }
 else
 {
@@ -26,12 +28,27 @@ else
     <div class="border border-light border-1" style="display:flex; gap: 15px;">
         <div>
             <h7><strong>Blue:</strong>@blueFighter.Firstname @blueFighter.Lastname</H7>
-            <FighterActionEventBoard Fighter="blueFighter"></FighterActionEventBoard>
+            <FighterActionEventBoard 
+                OnFightEvent="AddFightEvent"
+                Fighter="blueFighter">
+            </FighterActionEventBoard>
         </div>
 
         <div>
             <h7><strong>Red:</strong>@redFighter.Firstname @redFighter.Lastname</H7>
-            <FighterActionEventBoard Fighter="redFighter"></FighterActionEventBoard>
+            <FighterActionEventBoard 
+                OnFightEvent="AddFightEvent"
+                OnWin="AddWinner"
+                Fighter="redFighter">
+            </FighterActionEventBoard>
+        </div>
+
+        <div>
+            <h2>Testing</h2>    
+            @foreach(var matchEvent in MatchEvents)
+            {
+                <p>Highlight: @matchEvent.ToString()</p>
+            }
         </div>
 
     </div>
@@ -41,24 +58,45 @@ else
     private BoxingMatch match;
     private Fighter blueFighter;
     private Fighter redFighter;
-    private List<MatchEvent> matchEvents;
+    private string winMessage;
 
     [Parameter]
     public Guid MatchId { get; set; }
+    public List<BaseMatchEvent> MatchEvents { get; set; }
+
 
     protected override async Task OnInitializedAsync()
     {
         match = await matchCrudService.GetByIdAsync(MatchId);
         blueFighter = await fighterCrudService.GetByIdAsync(match.FighterBlueTeamId);
         redFighter = await fighterCrudService.GetByIdAsync(match.FighterRedTeamId);
-        matchEvents = new();
+        MatchEvents = new();
+        winMessage = string.Empty;
+        matchReportService.Add(this);
+
     }
 
-    public void OnEvent()
+    public void AddFightEvent(BaseMatchEvent e)
     {
-        matchReportService.
+        MatchEvents.Add(e);
+        matchReportService.Update(this);
+        RefreshMatchEvents();
     }
 
+    public void RefreshMatchEvents()
+    {
+        MatchEvents = matchReportService.GetEventsByMatchId(match.Id);
+    }
 
+    public void AddWinner(MatchResultEvent e)
+    {
+        AddFightEvent(e);
+
+        match.WinningFighterId = e.Fighter.Id;
+        matchCrudService.UpdateAsync(match);
+
+        winMessage = e.ToString();
+        match = null;
+    }
 
 }

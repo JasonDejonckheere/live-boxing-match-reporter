@@ -19,8 +19,8 @@
                         Left arm
                     </p>
                 </div>
-                <button class="btn btn-warning" @onclick="OnLeftUppercutClicked">Uppercut</button>
-                <button class="btn btn-warning" @onclick="OnLeftHookClicked">Hook</button>
+                <button disabled="@isUnconscious" class="btn btn-warning" @onclick="OnLeftUppercutClicked">Uppercut</button>
+                <button disabled="@isUnconscious" class="btn btn-warning" @onclick="OnLeftHookClicked">Hook</button>
             </div>
 
             <div class="border border-light border-1">
@@ -29,8 +29,25 @@
                         Right arm
                     </p>
                 </div>
-                <button class="btn btn-warning" @onclick="OnRightUppercutClicked">Uppercut</button>
-                <button class="btn btn-warning" @onclick="OnRightHookClicked">Hook</button>
+                <button disabled="@isUnconscious" class="btn btn-warning" @onclick="OnRightUppercutClicked">Uppercut</button>
+                <button disabled="@isUnconscious" class="btn btn-warning" @onclick="OnRightHookClicked">Hook</button>
+            </div>
+
+            <div class="border border-light border-1">
+                <div>
+                    <p>
+                        State
+                    </p>
+                </div>
+                <div>
+                    <button class="btn btn-danger" @onclick="OnDowned">Downed</button>
+                </div>
+                <div>
+                    <button class="btn btn-success" @onclick="OnConsciousRegain">Regain conscious</button>
+                </div>
+                <div>
+                    <button class="btn btn-info" @onclick="OnGrantWin">Grant win</button>
+                </div>
             </div>
         </div>
     }
@@ -40,56 +57,102 @@
 </div>
 
 @code {
+    private bool isUnconscious = false;
+
     [Parameter]
     public Fighter Fighter { get; set; }
 
-    public EventCallback<MatchEvent> OnEventHappen { get; set; }
+    [Parameter]
+    public EventCallback<BaseMatchEvent> OnFightEvent { get; set; }
+
+    [Parameter]
+    public EventCallback<MatchResultEvent> OnWin { get; set; }
+
 
     //had to do this cuz string value couldnt be written inside the invoke
     private void OnLeftUppercutClicked()
     {
-        OnEventHappen.InvokeAsync(
+        OnFightEvent.InvokeAsync(
             new MatchEvent
             {
                 Fighter = this.Fighter,
                 Limb = "left arm",
-                ActionPerformed = "uppercut"
+                ActionPerformed = "uppercut",
+                isConscious = true
             }
         );
     }
 
     private void OnLeftHookClicked()
     {
-        OnEventHappen.InvokeAsync(
+        OnFightEvent.InvokeAsync(
             new MatchEvent
                 {
                     Fighter = this.Fighter,
                     Limb = "left arm",
-                    ActionPerformed = "hook"
+                    ActionPerformed = "hook",
+                    isConscious = true
                 }
         );
     }
 
     private void OnRightUppercutClicked()
     {
-        OnEventHappen.InvokeAsync(
+        OnFightEvent.InvokeAsync(
             new MatchEvent
             {
                 Fighter = this.Fighter,
                 Limb = "right arm",
-                ActionPerformed = "uppercut"
+                ActionPerformed = "uppercut",
+                isConscious = true
             }
         );
     }
 
     private void OnRightHookClicked()
     {
-        OnEventHappen.InvokeAsync(
+        OnFightEvent.InvokeAsync(
             new MatchEvent
             {
                 Fighter = this.Fighter,
                 Limb = "right arm",
-                ActionPerformed = "hook"
+                ActionPerformed = "hook",
+                isConscious = true
+            }
+        );
+    }
+
+    private void OnDowned()
+    {
+        OnFightEvent.InvokeAsync(
+            new BaseMatchEvent
+            {
+                Fighter = this.Fighter,
+                isConscious = false
+            }
+        );
+        isUnconscious = true;
+    }
+
+    private void OnConsciousRegain()
+    {
+        OnFightEvent.InvokeAsync(
+            new BaseMatchEvent
+            {
+                Fighter = this.Fighter,
+                isConscious = true
+            }
+        );
+        isUnconscious = false;
+
+    }
+
+    private void OnGrantWin()
+    {
+        OnWin.InvokeAsync(
+            new MatchResultEvent
+            {
+                Fighter = this.Fighter
             }
         );
     }
