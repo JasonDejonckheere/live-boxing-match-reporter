@@ -1,0 +1,97 @@
+﻿<div class="border border-light border mx-auto px-4" style="background-color:cadetblue;">
+    @if(Fighter is null)
+    {
+        <div>
+            <p class="border border-light border-1">Fighter not loaded</p>
+        </div>
+    }
+    else
+    {
+        <div>
+            <p style="display:block">
+                @Fighter.Firstname @Fighter.Lastname
+            </p>
+        </div>
+        <div>
+            <div class="border border-light border-1">
+                <div>
+                    <p>
+                        Left arm
+                    </p>
+                </div>
+                <button class="btn btn-warning" @onclick="OnLeftUppercutClicked">Uppercut</button>
+                <button class="btn btn-warning" @onclick="OnLeftHookClicked">Hook</button>
+            </div>
+
+            <div class="border border-light border-1">
+                <div>
+                    <p>
+                        Right arm
+                    </p>
+                </div>
+                <button class="btn btn-warning" @onclick="OnRightUppercutClicked">Uppercut</button>
+                <button class="btn btn-warning" @onclick="OnRightHookClicked">Hook</button>
+            </div>
+        </div>
+    }
+
+
+    
+</div>
+
+@code {
+    [Parameter]
+    public Fighter Fighter { get; set; }
+
+    public EventCallback<MatchEvent> OnEventHappen { get; set; }
+
+    //had to do this cuz string value couldnt be written inside the invoke
+    private void OnLeftUppercutClicked()
+    {
+        OnEventHappen.InvokeAsync(
+            new MatchEvent
+            {
+                Fighter = this.Fighter,
+                Limb = "left arm",
+                ActionPerformed = "uppercut"
+            }
+        );
+    }
+
+    private void OnLeftHookClicked()
+    {
+        OnEventHappen.InvokeAsync(
+            new MatchEvent
+                {
+                    Fighter = this.Fighter,
+                    Limb = "left arm",
+                    ActionPerformed = "hook"
+                }
+        );
+    }
+
+    private void OnRightUppercutClicked()
+    {
+        OnEventHappen.InvokeAsync(
+            new MatchEvent
+            {
+                Fighter = this.Fighter,
+                Limb = "right arm",
+                ActionPerformed = "uppercut"
+            }
+        );
+    }
+
+    private void OnRightHookClicked()
+    {
+        OnEventHappen.InvokeAsync(
+            new MatchEvent
+            {
+                Fighter = this.Fighter,
+                Limb = "right arm",
+                ActionPerformed = "hook"
+            }
+        );
+    }
+
+}

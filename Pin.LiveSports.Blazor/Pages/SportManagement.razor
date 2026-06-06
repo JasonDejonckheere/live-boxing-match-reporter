@@ -112,12 +112,13 @@
     }
 
     //match
-    
+
     public async Task RefreshMatch()
     {
         allmatches = await matchCrudService.GetAllAsync();
         currentMatch = null;
     }
+
 
     public void AddMatch()
     {

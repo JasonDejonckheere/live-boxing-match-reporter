@@ -1,0 +1,64 @@
+﻿@page "/matchreport/{matchId:guid}"
+@using Pin.LiveSports.Blazor.Components
+@using Pin.LiveSports.Blazor.Services.Interfaces
+
+@inject ICrudService<BoxingMatch> matchCrudService
+@inject ICrudService<Fighter> fighterCrudService
+@inject IInMemoryMatchReportService matchReportService
+
+
+<h3>Match Report</h3>
+@if(match is null)
+{
+    <div>
+        <h6>Loading matching</h6>
+    </div>
+}
+else
+{
+    <div>
+
+        <h6>@blueFighter.Firstname @blueFighter.Lastname (@blueFighter.WeightClass)
+            <strong>VS</strong> 
+            @redFighter.Firstname @redFighter.Lastname (@redFighter.WeightClass)</h6>
+    </div>
+
+    <div class="border border-light border-1" style="display:flex; gap: 15px;">
+        <div>
+            <h7><strong>Blue:</strong>@blueFighter.Firstname @blueFighter.Lastname</H7>
+            <FighterActionEventBoard Fighter="blueFighter"></FighterActionEventBoard>
+        </div>
+
+        <div>
+            <h7><strong>Red:</strong>@redFighter.Firstname @redFighter.Lastname</H7>
+            <FighterActionEventBoard Fighter="redFighter"></FighterActionEventBoard>
+        </div>
+
+    </div>
+}
+
+@code {
+    private BoxingMatch match;
+    private Fighter blueFighter;
+    private Fighter redFighter;
+    private List<MatchEvent> matchEvents;
+
+    [Parameter]
+    public Guid MatchId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        match = await matchCrudService.GetByIdAsync(MatchId);
+        blueFighter = await fighterCrudService.GetByIdAsync(match.FighterBlueTeamId);
+        redFighter = await fighterCrudService.GetByIdAsync(match.FighterRedTeamId);
+        matchEvents = new();
+    }
+
+    public void OnEvent()
+    {
+        matchReportService.
+    }
+
+
+
+}

@@ -10,6 +10,7 @@
                 <th scope="col">Red team fighter</th>
                 <th scope="col">Blue team fighter</th>
                 <th scope="col">Status</th>
+                <th scope="col">Start match report</th>
                 <th scope="col">Edit</th>
                 <th scope="col">Delete</th>
 
@@ -27,6 +28,10 @@
                     <td>@match.FighterRedTeam.Firstname @match.FighterRedTeam.Lastname (@match.FighterRedTeam.WeightClass.ToString())</td>
 
                     <td>@(match.IsFinished ? $"Finished (winner: {match.WinningFighter.Firstname} {match.WinningFighter.Lastname}" : "Not finished") </td>
+
+                    <td>
+                        <NavLink href="@($"/matchreport/{match.Id}")" class="btn btn-success">Start</NavLink>
+                    </td>
 
                     <td>
                         <button class="btn btn-warning" @onclick="e => OnEdit.InvokeAsync(match)">Edit</button>
@@ -59,4 +64,7 @@ else
 
     [Parameter]
     public EventCallback<BoxingMatch> OnDelete { get; set; }
+
+    [Parameter]
+    public EventCallback<BoxingMatch> OnStart { get; set; }
 }

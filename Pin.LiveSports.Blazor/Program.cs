@@ -7,6 +7,8 @@ using Pin.LiveSports.Core.Entities;
 using Pin.LiveSports.Infrastructure.Data;
 using Pin.LiveSports.Infrastructure.Services;
 using Pin.LiveSports.Core.Interfaces;
+using Pin.LiveSports.Blazor.Services;
+using Pin.LiveSports.Blazor.Services.Interfaces;
 
 namespace Pin.LiveSports.Blazor
 {
@@ -27,6 +29,7 @@ namespace Pin.LiveSports.Blazor
             //di
             builder.Services.AddScoped<ICrudService<Fighter>, FighterDbCrudService>();
             builder.Services.AddScoped<ICrudService<BoxingMatch>, BoxingMatchDbCrudService>();
+            builder.Services.AddScoped<IInMemoryMatchReportService, InMemoryMatchReportService>();
 
 
 
