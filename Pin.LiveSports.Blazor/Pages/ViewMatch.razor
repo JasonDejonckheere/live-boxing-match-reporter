@@ -1,0 +1,33 @@
+﻿@page "/viewmatch"
+@using Pin.LiveSports.Blazor.Components
+@inject ICrudService<BoxingMatch> matchService;
+
+<h3>MatchViewing</h3>
+
+@if(currentMatchViewed is null)
+{
+    <MatchList 
+        Matches="allMatches"
+        HasCrudRights = "false">
+    </MatchList>
+}
+else
+{
+    
+}
+
+@code {
+    private BoxingMatch[] allMatches;
+    private BoxingMatch currentMatchViewed;
+
+    protected override async Task OnInitializedAsync()
+    {
+        allMatches = await matchService.GetAllAsync();
+        currentMatchViewed = null;
+    }
+
+    private void OnView(BoxingMatch match)
+    {
+        currentMatchViewed = match;
+    }
+}

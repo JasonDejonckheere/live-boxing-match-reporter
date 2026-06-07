@@ -34,7 +34,11 @@ namespace Pin.LiveSports.Infrastructure.Services
 
         public async Task<BoxingMatch[]> GetAllAsync()
         {
-            return await _db.BoxingMatches.ToArrayAsync<BoxingMatch>();
+            return await _db.BoxingMatches
+                .Include(bm => bm.WinningFighter)
+                .Include(bm => bm.FighterBlueTeam)
+                .Include(bm => bm.FighterRedTeam)
+                .ToArrayAsync<BoxingMatch>();
         }
 
         public async Task<BoxingMatch> GetByIdAsync(Guid id)
