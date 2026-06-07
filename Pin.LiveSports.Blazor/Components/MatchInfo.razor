@@ -1,0 +1,20 @@
+﻿<h3>MatchInfo</h3>
+
+@if(Match is null)
+{
+    <div>
+        <p>Match not loaded in...</p>
+        <button class="btn btn-succes" @onclick="e => OnFailedLoad.InvokeAsync()">Return to matches</button>
+
+
+    </div>
+}
+
+@code {
+
+    [Parameter]
+    public BoxingMatch Match { get; set; }
+
+    [Parameter]
+    public EventCallback OnFailedLoad { get; set; }
+}

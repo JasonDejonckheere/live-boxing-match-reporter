@@ -8,12 +8,17 @@
 {
     <MatchList 
         Matches="allMatches"
-        HasCrudRights = "false">
+        HasCrudRights = "false"
+        OnView="SetSelectedMatch">
     </MatchList>
 }
 else
 {
-    
+    <MatchInfo
+        Match="currentMatchViewed"
+        OnFailedLoad="RefreshMatches"
+    >
+    </MatchInfo>
 }
 
 @code {
@@ -22,12 +27,17 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        allMatches = await matchService.GetAllAsync();
-        currentMatchViewed = null;
+        await RefreshMatches();
     }
 
-    private void OnView(BoxingMatch match)
+    private void SetSelectedMatch(BoxingMatch match)
     {
         currentMatchViewed = match;
+    }
+
+    private async Task RefreshMatches()
+    {
+        allMatches = await matchService.GetAllAsync();
+        currentMatchViewed = null;
     }
 }
