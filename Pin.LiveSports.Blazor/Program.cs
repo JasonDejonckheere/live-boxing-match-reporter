@@ -27,7 +27,7 @@ namespace Pin.LiveSports.Blazor
             //di
             builder.Services.AddScoped<ICrudService<Fighter>, FighterDbCrudService>();
             builder.Services.AddScoped<ICrudService<BoxingMatch>, BoxingMatchDbCrudService>();
-            builder.Services.AddScoped<IInMemoryMatchReportService, InMemoryMatchReportService>();
+            builder.Services.AddSingleton<IInMemoryMatchReportService, InMemoryMatchReportService>();
 
 
 
