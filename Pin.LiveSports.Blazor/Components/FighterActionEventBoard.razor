@@ -64,6 +64,9 @@
     public Fighter Fighter { get; set; }
 
     [Parameter]
+    public Guid MatchId { get; set; }
+
+        [Parameter]
     public EventCallback<BaseMatchEvent> OnFightEvent { get; set; }
 
     [Parameter]
@@ -76,10 +79,11 @@
         OnFightEvent.InvokeAsync(
             new MatchEvent
             {
+                MatchId = this.MatchId,
                 Fighter = this.Fighter,
                 Limb = "left arm",
                 ActionPerformed = "uppercut",
-                isConscious = true
+                IsConcious = true
             }
         );
     }
@@ -89,10 +93,11 @@
         OnFightEvent.InvokeAsync(
             new MatchEvent
                 {
+                    MatchId = this.MatchId,
                     Fighter = this.Fighter,
                     Limb = "left arm",
                     ActionPerformed = "hook",
-                    isConscious = true
+                    IsConcious = true
                 }
         );
     }
@@ -102,10 +107,11 @@
         OnFightEvent.InvokeAsync(
             new MatchEvent
             {
+                MatchId = this.MatchId,
                 Fighter = this.Fighter,
                 Limb = "right arm",
                 ActionPerformed = "uppercut",
-                isConscious = true
+                IsConcious = true
             }
         );
     }
@@ -115,10 +121,11 @@
         OnFightEvent.InvokeAsync(
             new MatchEvent
             {
+                MatchId = this.MatchId,
                 Fighter = this.Fighter,
                 Limb = "right arm",
                 ActionPerformed = "hook",
-                isConscious = true
+                IsConcious = true
             }
         );
     }
@@ -128,8 +135,9 @@
         OnFightEvent.InvokeAsync(
             new BaseMatchEvent
             {
+                MatchId = this.MatchId,
                 Fighter = this.Fighter,
-                isConscious = false
+                IsConcious = false
             }
         );
         isUnconscious = true;
@@ -140,8 +148,9 @@
         OnFightEvent.InvokeAsync(
             new BaseMatchEvent
             {
+                MatchId = this.MatchId,
                 Fighter = this.Fighter,
-                isConscious = true
+                IsConcious = true
             }
         );
         isUnconscious = false;
@@ -153,6 +162,7 @@
         OnWin.InvokeAsync(
             new MatchResultEvent
             {
+                MatchId = this.MatchId,
                 Fighter = this.Fighter
             }
         );

@@ -6,11 +6,12 @@ namespace Pin.LiveSports.Blazor.Data
     {
         //not stored in db for this exam
         public Fighter Fighter { get; set; }
-        public bool isConscious { get; set; }
+        public bool IsConcious { get; set; }
+        public Guid MatchId { get; set; }
 
         public override string ToString()
         {
-            if(!isConscious) return $"{Fighter.Firstname} {Fighter.Lastname} has been knocked out!";
+            if(!IsConcious) return $"{Fighter.Firstname} {Fighter.Lastname} has been knocked out!";
             else return $"{Fighter.Firstname} {Fighter.Lastname} is back up!";
         }
     }

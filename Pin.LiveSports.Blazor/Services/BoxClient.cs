@@ -29,6 +29,8 @@ namespace Pin.LiveSports.Blazor.Services
             await connection.StartAsync();
         }
 
+        //todo change BaseMatchEvent to interface type IMatchEvent
+
         public async Task AddRemoteMatchEvent(BaseMatchEvent e)
         {
             await connection.SendAsync(nameof(BoxingHub.AddMatchEvent), e);

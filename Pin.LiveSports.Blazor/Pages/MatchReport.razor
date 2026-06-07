@@ -31,7 +31,8 @@ else
             <h7><strong>Blue:</strong>@blueFighter.Firstname @blueFighter.Lastname</H7>
             <FighterActionEventBoard 
                 OnFightEvent="AddFightEvent"
-                Fighter="blueFighter">
+                Fighter="blueFighter"
+                MatchId="match.Id">
             </FighterActionEventBoard>
         </div>
 
@@ -40,7 +41,8 @@ else
             <FighterActionEventBoard 
                 OnFightEvent="AddFightEvent"
                 OnWin="AddWinner"
-                Fighter="redFighter">
+                Fighter="redFighter"
+                MatchId="match.Id">
             </FighterActionEventBoard>
         </div>
 
@@ -64,6 +66,7 @@ else
 
     [Parameter]
     public Guid MatchId { get; set; }
+
     public List<BaseMatchEvent> MatchEvents { get; set; }
 
 
