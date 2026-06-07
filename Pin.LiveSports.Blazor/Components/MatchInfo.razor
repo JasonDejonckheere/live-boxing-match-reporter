@@ -46,21 +46,25 @@ else
     [Parameter]
     public EventCallback OnFailedLoad { get; set; }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         matchEvents = new();
         RefreshMatchEvents(Match.Id);
         boxClient = new BoxClient();
-        boxClient.Configure(OnRemoteMatchReport);
-        
+        boxClient.Configure(OnRemoteMatchEvent);
+        await boxClient.Start();
+
     }
 
-    private void OnRemoteMatchReport(BoxingMatch match)
+    private async void OnRemoteMatchEvent(BaseMatchEvent e)
     {
         // if(match.Id == currentMatchViewed.Id)
         // {
-        RefreshMatchEvents(match.Id);
-        this.StateHasChanged();
+        matchEvents.Add(e);
+
+        await InvokeAsync(() =>
+            this.StateHasChanged()
+        );
         // }
 
     }

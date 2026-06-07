@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
+using Pin.LiveSports.Blazor.Data;
 using Pin.LiveSports.Blazor.Hubs;
 using Pin.LiveSports.Blazor.Pages;
 using Pin.LiveSports.Core.Entities;
@@ -9,7 +10,7 @@ namespace Pin.LiveSports.Blazor.Services
     {
         protected HubConnection connection;
 
-        public const string REMOTE_MATCH_ADD = "RemoteMatchAdded";
+        public const string REMOTE_MATCH_ADD = "AddRemoteMatchEvent";
 
         public BoxClient()
         {
@@ -18,7 +19,7 @@ namespace Pin.LiveSports.Blazor.Services
                 .Build();
         }
 
-        public void Configure(Action<BoxingMatch> callback)
+        public void Configure(Action<BaseMatchEvent> callback)
         {
             connection.On(REMOTE_MATCH_ADD, callback);
         }
@@ -28,9 +29,9 @@ namespace Pin.LiveSports.Blazor.Services
             await connection.StartAsync();
         }
 
-        public async Task AddMatchReport(BoxingMatch match)
+        public async Task AddRemoteMatchEvent(BaseMatchEvent e)
         {
-            await connection.SendAsync(nameof(BoxingHub.AddMatch), match);
+            await connection.SendAsync(nameof(BoxingHub.AddMatchEvent), e);
         }
 
     }

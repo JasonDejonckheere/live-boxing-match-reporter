@@ -85,7 +85,7 @@ else
     {
         MatchEvents.Add(e);
         matchReportService.Update(this);
-        await boxClient.AddMatchReport(match);
+        await boxClient.AddRemoteMatchEvent(e);
         RefreshMatchEvents();
     }
 
@@ -101,7 +101,7 @@ else
         match.WinningFighterId = e.Fighter.Id;
         await matchCrudService.UpdateAsync(match);
 
-        await boxClient.AddMatchReport(match);
+        await boxClient.AddRemoteMatchEvent(e);
 
         winMessage = e.ToString();
         match = null;
