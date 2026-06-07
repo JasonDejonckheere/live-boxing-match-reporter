@@ -1,20 +1,75 @@
-﻿<h3>MatchInfo</h3>
+﻿@using Pin.LiveSports.Blazor.Services
+@using Pin.LiveSports.Blazor.Services.Interfaces
+@inject IInMemoryMatchReportService inMemoryMatchReportService
+
+<h3>MatchInfo</h3>
 
 @if(Match is null)
 {
     <div>
         <p>Match not loaded in...</p>
         <button class="btn btn-succes" @onclick="e => OnFailedLoad.InvokeAsync()">Return to matches</button>
+    </div>
+}
+else
+{
+    <div>
+        <div>
+            <h5>Match highlight events:</h5>
+        </div>
+        <div class="border border-1">
+            <ul>
+                @if(matchEvents is not null)
+                {
+                    @foreach (var e in matchEvents)
+                    {
+                        <li>
+                            @e.ToString()
+                        </li>
+                    }
+                }
+                
 
+            </ul>
+        </div>
 
     </div>
 }
 
 @code {
+    private List<BaseMatchEvent> matchEvents;
+    private BoxClient boxClient;
 
     [Parameter]
     public BoxingMatch Match { get; set; }
 
     [Parameter]
     public EventCallback OnFailedLoad { get; set; }
+
+    protected override void OnInitialized()
+    {
+        matchEvents = new();
+        RefreshMatchEvents(Match.Id);
+        boxClient = new BoxClient();
+        boxClient.Configure(OnRemoteMatchReport);
+        
+    }
+
+    private void OnRemoteMatchReport(BoxingMatch match)
+    {
+        // if(match.Id == currentMatchViewed.Id)
+        // {
+        RefreshMatchEvents(match.Id);
+        this.StateHasChanged();
+        // }
+
+    }
+
+    private void RefreshMatchEvents(Guid matchId)
+    {
+        if (Match != null)
+        {
+            matchEvents = inMemoryMatchReportService.GetEventsByMatchId(matchId);
+        }
+    }
 }

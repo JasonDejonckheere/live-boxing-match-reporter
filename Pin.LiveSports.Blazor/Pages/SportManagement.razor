@@ -1,5 +1,7 @@
 ﻿@page "/sportmanagement"
 @using Pin.LiveSports.Blazor.Components
+@using Pin.LiveSports.Blazor.Services
+
 @inject ICrudService<Fighter> fighterCrudService;
 @inject ICrudService<BoxingMatch> matchCrudService;
 
@@ -60,12 +62,15 @@
     private BoxingMatch currentMatch;
     private BoxingMatch[] allmatches;
 
+
     private string errorMessage;
 
     protected override async Task OnInitializedAsync()
     {
         await RefreshFighter();
         await RefreshMatch();
+
+
     }
 
     //fighter

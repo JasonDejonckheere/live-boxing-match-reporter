@@ -1,5 +1,7 @@
 ﻿@page "/viewmatch"
 @using Pin.LiveSports.Blazor.Components
+@using Pin.LiveSports.Blazor.Services
+
 @inject ICrudService<BoxingMatch> matchService;
 
 <h3>MatchViewing</h3>
@@ -24,10 +26,15 @@ else
 @code {
     private BoxingMatch[] allMatches;
     private BoxingMatch currentMatchViewed;
+    // private BoxClient boxClient;
 
     protected override async Task OnInitializedAsync()
     {
         await RefreshMatches();
+
+        // boxClient = new BoxClient();
+        // await boxClient.Start();
+        // boxClient.Configure(OnRemoteMatchReport);
     }
 
     private void SetSelectedMatch(BoxingMatch match)
@@ -40,4 +47,6 @@ else
         allMatches = await matchService.GetAllAsync();
         currentMatchViewed = null;
     }
+
+    
 }
