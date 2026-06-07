@@ -1,6 +1,10 @@
 ﻿<h3 class="mt-4">All matches</h3>
 
-<button class="btn btn-primary mb-4 mt-4" @onclick="OnAdd">Add Match</button>
+@if (HasCrudRights)
+{
+    <button class="btn btn-primary mb-4 mt-4" @onclick="OnAdd">Add Match</button>    
+}
+
 @if (Matches is not null)
 {
     <table class="table table-striped table-dark">
@@ -60,7 +64,7 @@
                     else
                     {
                         <td>
-                            <button class="btn btn-danger" @onclick="e => OnView.InvokeAsync(match)">View</button>
+                            <button class="btn btn-warning" @onclick="e => OnView.InvokeAsync(match)">View</button>
                         </td>
                     }
 
