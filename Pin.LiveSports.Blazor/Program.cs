@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
-using Pin.LiveSports.Blazor.Data;
 using Pin.LiveSports.Blazor.Hubs;
 using Pin.LiveSports.Core.Entities;
 using Pin.LiveSports.Infrastructure.Data;
@@ -21,7 +20,6 @@ namespace Pin.LiveSports.Blazor
             // Add services to the container.
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
-            builder.Services.AddSingleton<WeatherForecastService>();
 
             builder.Services.AddDbContext<BoxingDbContext>(options => 
                 options.UseSqlServer(connectionString: builder.Configuration.GetConnectionString("BoxingDb")));
