@@ -2,7 +2,7 @@
 
 namespace Pin.LiveSports.Blazor.Data
 {
-    public class MatchEvent : BaseMatchEvent
+    public class MatchAttackEvent : BaseMatchEvent
     {
         //not stored in db for this exam
 

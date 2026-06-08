@@ -10,7 +10,9 @@ namespace Pin.LiveSports.Blazor.Services
     {
         protected HubConnection connection;
 
-        public const string REMOTE_MATCH_ADD = "AddRemoteMatchEvent";
+        public const string REMOTE_MATCH_STATE_EVENT = nameof(AddRemoteMatchStateEvent);
+        public const string REMOTE_MATCH_RESULT_EVENT = nameof(AddRemoteMatchResultEvent);
+        public const string REMOTE_MATCH_ATTACK_EVENT = "AddRemoteMatchEvent";
 
         public BoxClient()
         {
@@ -19,9 +21,14 @@ namespace Pin.LiveSports.Blazor.Services
                 .Build();
         }
 
-        public void Configure(Action<BaseMatchEvent> callback)
+        public void Configure(
+            Action<MatchStateEvent> callbackStateEvent,
+            Action<MatchResultEvent> callbackResultEvent,
+            Action<MatchAttackEvent> callbackAttackEvent)
         {
-            connection.On(REMOTE_MATCH_ADD, callback);
+            connection.On(REMOTE_MATCH_STATE_EVENT, callbackStateEvent);
+            connection.On(REMOTE_MATCH_RESULT_EVENT, callbackResultEvent);
+            connection.On(REMOTE_MATCH_ATTACK_EVENT, callbackAttackEvent);
         }
 
         public async Task Start()
@@ -31,10 +38,17 @@ namespace Pin.LiveSports.Blazor.Services
 
         //todo change BaseMatchEvent to interface type IMatchEvent
 
-        public async Task AddRemoteMatchEvent(BaseMatchEvent e)
+        public async Task AddRemoteMatchStateEvent(MatchStateEvent e)
         {
             await connection.SendAsync(nameof(BoxingHub.AddMatchEvent), e);
         }
-
+        public async Task AddRemoteMatchResultEvent(MatchResultEvent e)
+        {
+            await connection.SendAsync(nameof(BoxingHub.AddMatchEvent), e);
+        }
+        public async Task AddRemoteMatchAttackEvent(MatchAttackEvent e)
+        {
+            await connection.SendAsync(nameof(BoxingHub.AddMatchEvent), e);
+        }
     }
 }
