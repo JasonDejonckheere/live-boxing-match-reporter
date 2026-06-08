@@ -39,7 +39,6 @@
                 <p class="text-decoration-underline mb-2" >State</p>
                 <button class="btn btn-danger mb-1" style="width: 85%;" @onclick="OnDowned">Downed</button>
                 <button class="btn btn-success mb-1" style="width: 85%;" @onclick="OnConsciousRegain">Regain conscious</button>
-                <button class="btn btn-info mb-1" style="width: 85%;" @onclick="OnGrantWin">Grant win</button>
             </div>
         </div>
     }
@@ -63,8 +62,6 @@
     [Parameter]
     public EventCallback<MatchStateEvent> OnStateEvent { get; set; }
 
-    [Parameter]
-    public EventCallback<MatchResultEvent> OnWin { get; set; }
 
 
     //had to do this cuz string value couldnt be written inside the invoke
@@ -150,16 +147,4 @@
         isUnconscious = false;
 
     }
-
-    private void OnGrantWin()
-    {
-        OnWin.InvokeAsync(
-            new MatchResultEvent
-            {
-                MatchId = this.MatchId,
-                Fighter = this.Fighter
-            }
-        );
-    }
-
 }

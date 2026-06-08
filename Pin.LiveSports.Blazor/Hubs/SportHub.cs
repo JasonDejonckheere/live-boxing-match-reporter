@@ -20,5 +20,9 @@ namespace Pin.LiveSports.Blazor.Hubs
         {
             await Clients.Others.SendAsync(BoxClient.REMOTE_MATCH_ATTACK_EVENT, e);
         }
+        public async Task AddMatchRoundResultEvent(MatchRoundResultEvent e)
+        {
+            await Clients.Others.SendAsync(BoxClient.REMOTE_MATCH_ROUNDRESULT_EVENT, e);
+        }
     }
 }

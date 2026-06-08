@@ -11,6 +11,8 @@ namespace Pin.LiveSports.Blazor.Services
         public const string REMOTE_MATCH_STATE_EVENT = nameof(AddRemoteMatchStateEvent);
         public const string REMOTE_MATCH_RESULT_EVENT = nameof(AddRemoteMatchResultEvent);
         public const string REMOTE_MATCH_ATTACK_EVENT = nameof(AddRemoteMatchAttackEvent);
+        public const string REMOTE_MATCH_ROUNDRESULT_EVENT = nameof(AddRemoteMatchRoundResultEvent);
+
 
         public BoxClient()
         {
@@ -46,6 +48,11 @@ namespace Pin.LiveSports.Blazor.Services
         public async Task AddRemoteMatchAttackEvent(MatchAttackEvent e)
         {
             await connection.SendAsync(nameof(BoxingHub.AddMatchAttackEvent), e);
+        }
+
+        public async Task AddRemoteMatchRoundResultEvent(MatchRoundResultEvent e)
+        {
+            await connection.SendAsync(nameof(BoxingHub.AddMatchRoundResultEvent), e);
         }
     }
 }

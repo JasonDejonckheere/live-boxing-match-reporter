@@ -39,11 +39,20 @@ else
             <FighterActionEventBoard 
                 OnAttackEvent="AddAttackEvent"
                 OnStateEvent="AddStateEvent"
-                OnWin="AddWinner"
                 Fighter="redFighter"
                 MatchId="match.Id">
             </FighterActionEventBoard>
         </div>
+
+        <MatchManager
+            MatchId="match.Id"
+            BlueFighter="blueFighter"
+            RedFighter="redFighter"
+            OnMatchWin="AddMatchWinner"
+            OnRoundWin="AddRoundWinEvent"
+        >
+
+        </MatchManager>
         
     </div>
 
@@ -104,7 +113,7 @@ else
         MatchEvents = matchReportService.GetEventsByMatchId(match.Id);
     }
 
-    public async Task AddWinner(MatchResultEvent e)
+    public async Task AddMatchWinner(MatchResultEvent e)
     {
         match.WinningFighterId = e.Fighter.Id;
 
@@ -117,6 +126,14 @@ else
 
         winMessage = e.ToString();
         match = null;
+    }
+
+    public async Task AddRoundWinEvent(MatchRoundResultEvent e)
+    {
+        MatchEvents.Add(e);
+        matchReportService.Update(this);
+        await boxClient.AddRemoteMatchRoundResultEvent(e);
+        RefreshMatchEvents();
     }
 
 }

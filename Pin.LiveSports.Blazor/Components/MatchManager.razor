@@ -1,0 +1,105 @@
+﻿<div>
+    <div class="mb-2 d-flex justify-content-center gap-3">
+
+        <div class="border border-light border-1 d-flex flex-column align-items-center p-2">
+            <div>
+                <p class="text-decoration-underline">
+                    Round manager
+                </p>
+            </div>
+
+            <div>
+                <p>Round: @currentRound</p>
+
+                <button class="btn btn-warning mb-1" style="width: 100%; height: 100%" @onclick="() => WinRound(BlueFighter)">Blue wins round</button>
+                <button class="btn btn-warning mb-1" style="width: 100%; height: 100%" @onclick="() => WinRound(RedFighter)">Red wins round</button>
+            </div>            
+        </div>
+
+        <div class="border border-light border-1 d-flex flex-column align-items-center p-2">
+            <div>
+                <p class="text-decoration-underline">
+                    Match manager
+                </p>
+            </div>
+            <button class="btn btn-info mb-1" style="width: 85%;" @onclick="() => OnGrantWin(BlueFighter)">Grant win to blue</button>
+            <button class="btn btn-info mb-1" style="width: 85%;" @onclick="() => OnGrantWin(RedFighter)">Grant win to red</button>
+
+        </div>
+
+        <div>
+            <p>@testData</p>
+        </div>
+    </div>
+</div>
+
+@code {
+    private int currentRound = 1;
+    private string testData;
+    private int scoreBlue = 0;
+    private int scoreRed = 0;
+
+
+    [Parameter]
+    public Fighter BlueFighter { get; set; }
+
+    [Parameter]
+    public Fighter RedFighter { get; set; }
+
+    [Parameter]
+    public Guid MatchId { get; set; }
+
+    [Parameter]
+    public EventCallback<MatchResultEvent> OnMatchWin { get; set; }
+
+    [Parameter]
+    public EventCallback<MatchRoundResultEvent> OnRoundWin { get; set; }
+
+    private void WinRound(Fighter fighter)
+    {
+        if(fighter == RedFighter)
+        {
+            scoreRed += 10;
+            scoreBlue += 9;
+        }
+        else
+        {
+            scoreBlue += 10;
+            scoreRed += 9;
+        }
+
+        if (currentRound >= 13)
+        {
+            Fighter winner = scoreBlue > scoreRed ? BlueFighter : RedFighter;
+            OnGrantWin(winner);
+        }
+
+        OnGrantRoundWin(fighter);
+        testData = $"{fighter.Firstname} {fighter.Lastname} wins round {currentRound}.\bBlue: {scoreBlue}\bRed: {scoreRed}";
+        currentRound++;
+    }
+
+    private void OnGrantWin(Fighter fighter)
+    {
+        OnMatchWin.InvokeAsync(
+            new MatchResultEvent
+            {
+                MatchId = this.MatchId,
+                Fighter = fighter
+            }
+        );
+    }
+
+    private void OnGrantRoundWin(Fighter fighter)
+    {
+        OnRoundWin.InvokeAsync(
+            new MatchRoundResultEvent
+            {
+                MatchId = this.MatchId,
+                Fighter = fighter,
+                RoundNumber = currentRound
+            }
+        );
+    }
+
+}
