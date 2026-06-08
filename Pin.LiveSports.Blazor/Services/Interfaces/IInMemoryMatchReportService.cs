@@ -9,7 +9,7 @@ namespace Pin.LiveSports.Blazor.Services.Interfaces
 
         void Update(MatchReport matchReport);
 
-        List<BaseMatchEvent> GetEventsByMatchId(Guid matchId);
+        List<MatchStateEvent> GetEventsByMatchId(Guid matchId);
 
         List<MatchReport> GetAll();
     }

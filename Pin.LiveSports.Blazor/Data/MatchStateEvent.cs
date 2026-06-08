@@ -1,8 +1,10 @@
-﻿using Pin.LiveSports.Core.Entities;
+﻿using Pin.LiveSports.Blazor.Services.Interfaces;
+using Pin.LiveSports.Core.Entities;
+using Pin.LiveSports.Core.Interfaces;
 
 namespace Pin.LiveSports.Blazor.Data
 {
-    public class BaseMatchEvent
+    public class MatchStateEvent : IFightEvent
     {
         //not stored in db for this exam
         public Fighter Fighter { get; set; }
