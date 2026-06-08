@@ -10,7 +10,7 @@ namespace Pin.LiveSports.Blazor.Services
 
         public const string REMOTE_MATCH_STATE_EVENT = nameof(AddRemoteMatchStateEvent);
         public const string REMOTE_MATCH_RESULT_EVENT = nameof(AddRemoteMatchResultEvent);
-        public const string REMOTE_MATCH_ATTACK_EVENT = "AddRemoteMatchEvent";
+        public const string REMOTE_MATCH_ATTACK_EVENT = nameof(AddRemoteMatchAttackEvent);
 
         public BoxClient()
         {
@@ -34,8 +34,6 @@ namespace Pin.LiveSports.Blazor.Services
         {
             await connection.StartAsync();
         }
-
-        //todo change BaseMatchEvent to interface type IMatchEvent
 
         public async Task AddRemoteMatchStateEvent(MatchStateEvent e)
         {
