@@ -8,7 +8,7 @@ namespace Pin.LiveSports.Blazor.Hubs
     public class BoxingHub : Hub
     {
         //todo
-        public async Task AddMatchEvent(MatchStateEvent e)
+        public async Task AddMatchEvent(BaseMatchEvent e)
         {
             await Clients.Others.SendAsync(BoxClient.REMOTE_MATCH_ADD, e);
         }

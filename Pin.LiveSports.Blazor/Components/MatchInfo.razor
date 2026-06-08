@@ -34,7 +34,7 @@ else
 }
 
 @code {
-    private List<MatchStateEvent> matchEvents;
+    private List<BaseMatchEvent> matchEvents;
     private BoxClient boxClient;
 
     [Parameter]
@@ -45,7 +45,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        matchEvents = new List<MatchStateEvent>();
+        matchEvents = new List<BaseMatchEvent>();
         RefreshMatchEvents();
         boxClient = new BoxClient();
         boxClient.Configure(OnRemoteMatchEvent);
@@ -53,7 +53,7 @@ else
 
     }
 
-    private async void OnRemoteMatchEvent(MatchStateEvent e)
+    private async void OnRemoteMatchEvent(BaseMatchEvent e)
     {
         if(Match.Id == e.MatchId)
         {

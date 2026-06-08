@@ -67,7 +67,7 @@ else
     [Parameter]
     public Guid MatchId { get; set; }
 
-    public List<MatchStateEvent> MatchEvents { get; set; }
+    public List<BaseMatchEvent> MatchEvents { get; set; }
 
 
     protected override async Task OnInitializedAsync()
@@ -84,7 +84,7 @@ else
 
     }
 
-    public async Task AddFightEvent(MatchStateEvent e)
+    public async Task AddFightEvent(BaseMatchEvent e)
     {
         MatchEvents.Add(e);
         matchReportService.Update(this);
