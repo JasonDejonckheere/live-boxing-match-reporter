@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using Pin.LiveSports.Blazor.Data;
 using Pin.LiveSports.Blazor.Hubs;
-using Pin.LiveSports.Blazor.Pages;
-using Pin.LiveSports.Core.Entities;
 
 namespace Pin.LiveSports.Blazor.Services
 {

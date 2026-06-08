@@ -1,6 +1,4 @@
-﻿@using Pin.LiveSports.Core.Enums
-
-<EditForm Model="@Fighter" OnValidSubmit="@(e => OnSave.InvokeAsync(Fighter))">
+﻿<EditForm Model="@Fighter" OnValidSubmit="@(e => OnSave.InvokeAsync(Fighter))">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <div class="form-group">
