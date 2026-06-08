@@ -48,14 +48,40 @@ else
         matchEvents = new List<BaseMatchEvent>();
         RefreshMatchEvents();
         boxClient = new BoxClient();
-        boxClient.Configure(OnRemoteMatchEvent);
+        boxClient.Configure(OnRemoteStateEvent, OnRemoteResultEvent, OnRemoteAttackEvent);
         await boxClient.Start();
 
     }
 
-    private async void OnRemoteMatchEvent(BaseMatchEvent e)
+    private async void OnRemoteStateEvent(MatchStateEvent e)
     {
         if(Match.Id == e.MatchId)
+        {
+            matchEvents.Add(e);
+
+            //otherwise app crashed cuz not on same thread
+            await InvokeAsync(() =>
+                this.StateHasChanged()
+            );
+        }
+    }
+
+    private async void OnRemoteResultEvent(MatchResultEvent e)
+    {
+        if (Match.Id == e.MatchId)
+        {
+            matchEvents.Add(e);
+
+            //otherwise app crashed cuz not on same thread
+            await InvokeAsync(() =>
+                this.StateHasChanged()
+            );
+        }
+    }
+
+    private async void OnRemoteAttackEvent(MatchAttackEvent e)
+    {
+        if (Match.Id == e.MatchId)
         {
             matchEvents.Add(e);
 

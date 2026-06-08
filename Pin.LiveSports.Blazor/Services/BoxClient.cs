@@ -24,7 +24,8 @@ namespace Pin.LiveSports.Blazor.Services
         public void Configure(
             Action<MatchStateEvent> callbackStateEvent,
             Action<MatchResultEvent> callbackResultEvent,
-            Action<MatchAttackEvent> callbackAttackEvent)
+            Action<MatchAttackEvent> callbackAttackEvent
+            )
         {
             connection.On(REMOTE_MATCH_STATE_EVENT, callbackStateEvent);
             connection.On(REMOTE_MATCH_RESULT_EVENT, callbackResultEvent);
@@ -40,15 +41,15 @@ namespace Pin.LiveSports.Blazor.Services
 
         public async Task AddRemoteMatchStateEvent(MatchStateEvent e)
         {
-            await connection.SendAsync(nameof(BoxingHub.AddMatchEvent), e);
+            await connection.SendAsync(nameof(BoxingHub.AddMatchStateEvent), e);
         }
         public async Task AddRemoteMatchResultEvent(MatchResultEvent e)
         {
-            await connection.SendAsync(nameof(BoxingHub.AddMatchEvent), e);
+            await connection.SendAsync(nameof(BoxingHub.AddMatchResultEvent), e);
         }
         public async Task AddRemoteMatchAttackEvent(MatchAttackEvent e)
         {
-            await connection.SendAsync(nameof(BoxingHub.AddMatchEvent), e);
+            await connection.SendAsync(nameof(BoxingHub.AddMatchAttackEvent), e);
         }
     }
 }

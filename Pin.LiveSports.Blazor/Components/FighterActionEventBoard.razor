@@ -67,7 +67,10 @@
     public Guid MatchId { get; set; }
 
         [Parameter]
-    public EventCallback<BaseMatchEvent> OnFightEvent { get; set; }
+    public EventCallback<MatchAttackEvent> OnAttackEvent { get; set; }
+
+    [Parameter]
+    public EventCallback<MatchStateEvent> OnStateEvent { get; set; }
 
     [Parameter]
     public EventCallback<MatchResultEvent> OnWin { get; set; }
@@ -76,7 +79,7 @@
     //had to do this cuz string value couldnt be written inside the invoke
     private void OnLeftUppercutClicked()
     {
-        OnFightEvent.InvokeAsync(
+        OnAttackEvent.InvokeAsync(
             new MatchAttackEvent
             {
                 MatchId = this.MatchId,
@@ -90,7 +93,7 @@
 
     private void OnLeftHookClicked()
     {
-        OnFightEvent.InvokeAsync(
+        OnAttackEvent.InvokeAsync(
             new MatchAttackEvent
                 {
                     MatchId = this.MatchId,
@@ -104,7 +107,7 @@
 
     private void OnRightUppercutClicked()
     {
-        OnFightEvent.InvokeAsync(
+        OnAttackEvent.InvokeAsync(
             new MatchAttackEvent
             {
                 MatchId = this.MatchId,
@@ -118,7 +121,7 @@
 
     private void OnRightHookClicked()
     {
-        OnFightEvent.InvokeAsync(
+        OnAttackEvent.InvokeAsync(
             new MatchAttackEvent
             {
                 MatchId = this.MatchId,
@@ -132,7 +135,7 @@
 
     private void OnDowned()
     {
-        OnFightEvent.InvokeAsync(
+        OnStateEvent.InvokeAsync(
             new MatchStateEvent
             {
                 MatchId = this.MatchId,
@@ -145,7 +148,7 @@
 
     private void OnConsciousRegain()
     {
-        OnFightEvent.InvokeAsync(
+        OnStateEvent.InvokeAsync(
             new MatchStateEvent
             {
                 MatchId = this.MatchId,
