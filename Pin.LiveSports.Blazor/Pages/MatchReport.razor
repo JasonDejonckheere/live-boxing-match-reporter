@@ -44,15 +44,15 @@ else
                 MatchId="match.Id">
             </FighterActionEventBoard>
         </div>
+        
+    </div>
 
-        <div>
-            <h2>Testing</h2>    
-            @foreach(var matchEvent in MatchEvents)
-            {
-                <p>Highlight: @matchEvent.ToString()</p>
-            }
-        </div>
-
+    <div>
+        <h2>Live Reported Events</h2>
+        @foreach (var matchEvent in MatchEvents)
+        {
+            <p>Highlight: @matchEvent.ToString()</p>
+        }
     </div>
 }
 
