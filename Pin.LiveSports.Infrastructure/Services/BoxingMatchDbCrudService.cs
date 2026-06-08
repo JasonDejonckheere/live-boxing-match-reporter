@@ -35,6 +35,7 @@ namespace Pin.LiveSports.Infrastructure.Services
         public async Task<BoxingMatch[]> GetAllAsync()
         {
             return await _db.BoxingMatches
+                .OrderBy(bm => bm.IsFinished)
                 .Include(bm => bm.WinningFighter)
                 .Include(bm => bm.FighterBlueTeam)
                 .Include(bm => bm.FighterRedTeam)

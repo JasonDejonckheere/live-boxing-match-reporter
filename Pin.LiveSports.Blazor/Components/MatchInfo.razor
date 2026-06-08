@@ -1,6 +1,5 @@
-﻿@inject IInMemoryMatchReportService inMemoryMatchReportService
-
-<h3>MatchInfo</h3>
+﻿@using Pin.LiveSports.Blazor.Pages
+@inject IInMemoryMatchReportService inMemoryMatchReportService
 
 @if(Match is null)
 {
@@ -11,21 +10,38 @@
 }
 else
 {
-    <div>
-        <div>
-            <h5>Match highlight events:</h5>
-        </div>
-        <div class="border border-1">
-            <ul>
-                    @foreach (var e in matchEvents)
-                    {
-                        <li>
-                            @e.ToString()
-                        </li>
-                    }
-                
+    <div class="container mt-4">
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white">
+                <h3 class="mb-0 text-center">Match highlight events:</h3>
+            </div>
 
-            </ul>
+            <div class="card-body">
+                @if(matchEvents.Count == 0)
+                {
+                    <div class="alert alert-secondary text-center">
+                        No events yet.
+                    </div>
+                }
+                else
+                {
+                    <ul class="list-group list-group-flush">
+                        @foreach(var e in matchEvents)
+                        {
+                            <li class="list-group-item py-3">
+                                <div class="d-flex justify-content-between align-content-lg-center">
+                                    <div>
+                                        <span>
+                                            @e.ToString()
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                }
+
+            </div>
         </div>
 
     </div>

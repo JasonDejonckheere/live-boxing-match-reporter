@@ -72,10 +72,12 @@ else
     private string winMessage;
     private BoxClient boxClient;
 
+    //todo: inmemory service
     [Parameter]
     public Guid MatchId { get; set; }
 
     public List<BaseMatchEvent> MatchEvents { get; set; }
+    //
 
 
     protected override async Task OnInitializedAsync()
@@ -116,6 +118,7 @@ else
     public async Task AddMatchWinner(MatchResultEvent e)
     {
         match.WinningFighterId = e.Fighter.Id;
+        match.IsFinished = true;
 
         MatchEvents.Add(e);
         matchReportService.Update(this);

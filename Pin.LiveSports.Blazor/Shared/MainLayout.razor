@@ -2,15 +2,43 @@
 
 <PageTitle>Pin.LiveSports.Blazor</PageTitle>
 
-<div class="page">
-    <div class="sidebar">
+
+
+<head>
+    <section class="mb-5">
+			<nav class="navbar navbar-expand-md bg-light">
+				<div class="container">
+					<a class="navbar-brand" href="/">Boxing sports center</a>
+					<div class="collapse navbar-collapse" id="navbarSupportedContent1">
+						<ul class="navbar-nav ms-auto my-2 my-md-0">
+							<li class="nav-item ms-lg-4">
+								<a class="nav-link" href="/sportmanagement">Sport management</a>
+							</li>
+							<li class="nav-item ms-lg-4">
+								<a class="nav-link" href="/viewmatch">View matches</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</section>
+</head>
+
+    <div class="page">
+
+    @* <div class="sidebar">
         <NavMenu />
-    </div>
+    </div>  *@
+
+    
+
 
     <main>
-        <div class="top-row px-4">
+        
+		
+        @* <div class="top-row px-4">
             <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
+        </div> *@
 
         <article class="content px-4">
             @Body
