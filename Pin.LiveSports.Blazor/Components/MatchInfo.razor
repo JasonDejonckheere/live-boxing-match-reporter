@@ -46,7 +46,7 @@ else
         matchEvents = new List<BaseMatchEvent>();
         RefreshMatchEvents();
         boxClient = new BoxClient();
-        boxClient.Configure(OnRemoteStateEvent, OnRemoteResultEvent, OnRemoteAttackEvent);
+        boxClient.Configure(OnRemoteStateEvent, OnRemoteResultEvent, OnRemoteAttackEvent, OnRemoteRoundResultEvent);
         await boxClient.Start();
 
     }
@@ -55,7 +55,8 @@ else
     {
         if(Match.Id == e.MatchId)
         {
-            matchEvents.Add(e);
+            // matchEvents.Add(e);
+            matchEvents = inMemoryMatchReportService.GetEventsByMatchId(e.MatchId);
 
             //otherwise app crashed cuz not on same thread
             await InvokeAsync(() =>
@@ -68,7 +69,8 @@ else
     {
         if (Match.Id == e.MatchId)
         {
-            matchEvents.Add(e);
+            // matchEvents.Add(e);
+            matchEvents = inMemoryMatchReportService.GetEventsByMatchId(e.MatchId);
 
             //otherwise app crashed cuz not on same thread
             await InvokeAsync(() =>
@@ -81,7 +83,22 @@ else
     {
         if (Match.Id == e.MatchId)
         {
-            matchEvents.Add(e);
+            // matchEvents.Add(e);
+            matchEvents = inMemoryMatchReportService.GetEventsByMatchId(e.MatchId);
+
+            //otherwise app crashed cuz not on same thread
+            await InvokeAsync(() =>
+                this.StateHasChanged()
+            );
+        }
+    }
+
+    private async void OnRemoteRoundResultEvent(MatchRoundResultEvent e)
+    {
+        if (Match.Id == e.MatchId)
+        {
+            // matchEvents.Add(e);
+            matchEvents = inMemoryMatchReportService.GetEventsByMatchId(e.MatchId);
 
             //otherwise app crashed cuz not on same thread
             await InvokeAsync(() =>

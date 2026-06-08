@@ -24,12 +24,15 @@ namespace Pin.LiveSports.Blazor.Services
         public void Configure(
             Action<MatchStateEvent> callbackStateEvent,
             Action<MatchResultEvent> callbackResultEvent,
-            Action<MatchAttackEvent> callbackAttackEvent
+            Action<MatchAttackEvent> callbackAttackEvent,
+            Action<MatchRoundResultEvent> callbackRoundResult
             )
         {
             connection.On(REMOTE_MATCH_STATE_EVENT, callbackStateEvent);
             connection.On(REMOTE_MATCH_RESULT_EVENT, callbackResultEvent);
             connection.On(REMOTE_MATCH_ATTACK_EVENT, callbackAttackEvent);
+            connection.On(REMOTE_MATCH_ROUNDRESULT_EVENT, callbackRoundResult);
+
         }
 
         public async Task Start()

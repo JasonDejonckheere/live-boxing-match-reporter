@@ -65,9 +65,9 @@
 
 
     //had to do this cuz string value couldnt be written inside the invoke
-    private void OnLeftUppercutClicked()
+    private async Task OnLeftUppercutClicked()
     {
-        OnAttackEvent.InvokeAsync(
+        await OnAttackEvent.InvokeAsync(
             new MatchAttackEvent
             {
                 MatchId = this.MatchId,
@@ -79,9 +79,9 @@
         );
     }
 
-    private void OnLeftHookClicked()
+    private async Task OnLeftHookClicked()
     {
-        OnAttackEvent.InvokeAsync(
+        await OnAttackEvent.InvokeAsync(
             new MatchAttackEvent
                 {
                     MatchId = this.MatchId,
@@ -93,9 +93,9 @@
         );
     }
 
-    private void OnRightUppercutClicked()
+    private async Task OnRightUppercutClicked()
     {
-        OnAttackEvent.InvokeAsync(
+        await OnAttackEvent.InvokeAsync(
             new MatchAttackEvent
             {
                 MatchId = this.MatchId,
@@ -107,9 +107,9 @@
         );
     }
 
-    private void OnRightHookClicked()
+    private async Task OnRightHookClicked()
     {
-        OnAttackEvent.InvokeAsync(
+        await OnAttackEvent.InvokeAsync(
             new MatchAttackEvent
             {
                 MatchId = this.MatchId,
@@ -121,9 +121,9 @@
         );
     }
 
-    private void OnDowned()
+    private async Task OnDowned()
     {
-        OnStateEvent.InvokeAsync(
+        await OnStateEvent.InvokeAsync(
             new MatchStateEvent
             {
                 MatchId = this.MatchId,
@@ -134,9 +134,9 @@
         isUnconscious = true;
     }
 
-    private void OnConsciousRegain()
+    private async Task OnConsciousRegain()
     {
-        OnStateEvent.InvokeAsync(
+        await OnStateEvent.InvokeAsync(
             new MatchStateEvent
             {
                 MatchId = this.MatchId,
