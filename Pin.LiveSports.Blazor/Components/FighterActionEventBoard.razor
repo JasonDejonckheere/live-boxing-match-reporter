@@ -1,49 +1,61 @@
-﻿<div class="border border-light border mx-auto p-4" style="background-color:cadetblue;">
+﻿<div class="card shadow-lg border-0 mx-auto mt-4" 
+     style="max-width: 500px; background-color:#1f2937; color:white; border-radius: 16px;">
     @if(Fighter is null)
     {
-        <div>
-            <p class="border border-light border-1">Fighter not loaded</p>
+        <div class="card-body text-center" >
+            <p class="text-danger">Fighter not loaded</p>
         </div>
     }
     else
     {
-        <div>
-            <p style="display:block">
+        <div class="card-header text-center border-0" style="background-color: #111827; border-radius: 16px 16px 0 0;">
+            <h3 class="fw-bold mb-1">
                 @Fighter.Firstname @Fighter.Lastname
-            </p>
+            </h3>
         </div>
-        <div>
-            <div class="mb-2 d-flex justify-content-center gap-3">
-                <div class="border border-light border-1 d-flex flex-column align-items-center p-2">
-                    <div>
-                        <p class="text-decoration-underline">
-                            Left arm
-                        </p>
+
+        <div class="card-body">
+            <div class="row g-3 mb-4">
+
+                <div class="col-6">
+                    <div class="card bg-dark text-white border-secondary h-100">
+                        <div class="card-body text-center">
+                            <h5 class="text-warning mb-3">
+                                Left arm
+                            </h5>
+                            <button disabled="@isUnconscious" class="btn btn-warning mb-2 w-100 fw-bold" @onclick="OnLeftUppercutClicked">Uppercut</button>
+                            <button disabled="@isUnconscious" class="btn btn-warning mb-2 w-100 fw-bold" @onclick="OnLeftHookClicked">Hook</button>
+                        </div>
                     </div>
-                    <button disabled="@isUnconscious" class="btn btn-warning mb-1" style="width: 100%; height: 100%" @onclick="OnLeftUppercutClicked">Uppercut</button>
-                    <button disabled="@isUnconscious" class="btn btn-warning mb-1" style="width: 100%; height: 100%" @onclick="OnLeftHookClicked">Hook</button>
                 </div>
 
-                <div class="border border-light border-1 d-flex flex-column align-items-center p-2">
-                    <div>
-                        <p class="text-decoration-underline">
-                            Right arm
-                        </p>
+                <div class="col-6">
+                    <div class="card bg-dark text-white border-secondary h-100">
+                        <div class="card-body text-center">
+                            <h5 class="text-warning mb-3">
+                                Right arm
+                            </h5>
+                            <button disabled="@isUnconscious" class="btn btn-warning mb-2 w-100 fw-bold" @onclick="OnRightUppercutClicked">Uppercut</button>
+                            <button disabled="@isUnconscious" class="btn btn-warning mb-2 w-100 fw-bold" @onclick="OnRightHookClicked">Hook</button>
+                        </div>
                     </div>
-                    <button disabled="@isUnconscious" class="btn btn-warning mb-1" style="width: 100%; height: 100%" @onclick ="OnRightUppercutClicked">Uppercut</button>
-                    <button disabled="@isUnconscious" class="btn btn-warning mb-1" style="width: 100%; height: 100%" @onclick="OnRightHookClicked">Hook</button>
                 </div>
             </div>
 
-            <div class="border border-light border-1 d-flex flex-column align-items-center p-2">
-                <p class="text-decoration-underline mb-2" >State</p>
-                <button class="btn btn-danger mb-1" style="width: 85%;" @onclick="OnDowned">Downed</button>
-                <button class="btn btn-success mb-1" style="width: 85%;" @onclick="OnConsciousRegain">Regain conscious</button>
+            <div class="card bg-dark border-secondary">
+                <div class="card-body text-center">
+                    <h5 class="mb-3 text-info" >
+                        State
+                    </h5>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-danger fw-bold" @onclick="OnDowned">Downed</button>
+                        <button class="btn btn-success mb-1" @onclick="OnConsciousRegain">Regain conscious</button>
+                    </div>
+
+                </div>
             </div>
         </div>
     }
-
-
     
 </div>
 
