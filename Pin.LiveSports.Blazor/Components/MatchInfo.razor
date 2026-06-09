@@ -17,7 +17,7 @@ else
             </div>
 
             <div class="card-body">
-                @if(matchEvents.Count == 0)
+                @if(!matchEvents.Any() || matchEvents is null)
                 {
                     <div class="alert alert-secondary text-center">
                         No events yet.
@@ -26,18 +26,22 @@ else
                 else
                 {
                     <ul class="list-group list-group-flush">
-                        @foreach(var e in matchEvents)
+                        @for(int i = 1; i <= matchEvents.Count; i++)
                         {
-                            <li class="list-group-item py-3">
+                            <li class="list-group-item py-1">
                                 <div class="d-flex justify-content-between align-content-lg-center">
                                     <div>
                                         <span>
-                                            @e.ToString()
+                                            @(matchEvents.Count - i + 1). @matchEvents[matchEvents.Count - i].ToString()
                                         </span>
                                     </div>
                                 </div>
                             </li>
                         }
+                        @* }
+                        @foreach(var e in matchEvents)
+                        { *@
+                            
                     </ul>
                 }
 
