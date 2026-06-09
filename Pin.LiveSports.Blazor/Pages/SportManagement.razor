@@ -3,56 +3,82 @@
 @inject ICrudService<Fighter> fighterCrudService;
 @inject ICrudService<BoxingMatch> matchCrudService;
 
-<h3>SportManagement</h3>
+<div class="container-fluid py-4 px-4" style="background-color: #111827; min-height: 100vh; color:white;">
+    <div class="mb-4">
+        <h1 class="fw-bold display-5">
+            Sport Management Dashboard
+        </h1>
+    </div>
 
-<div>
 
     @if (!string.IsNullOrEmpty(errorMessage))
     {
-        <div class="alert alert-danger">
+        <div class="alert alert-danger shadow-sm">
             @errorMessage
         </div>
     }
 
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card shadow-lg border-0 h-100" style="background-color: #1f2937; color:white; border-radius: 16px;">
+                <div class="card-header border-0" style="background-color: #0f172a; border-radius: 16px 16px 0 0;">
+                    <h3 class="mb-0">
+                        Fighters
+                    </h3>
+                </div>
 
-    @if (currentFighter == null)
-    {
-        <FighterList Fighters="allFighters"
-                     OnAdd="AddFighter"
-                     OnEdit="EditFighter"
-                     OnDelete="DeleteFighter">
-        </FighterList>
-    }
-    else
-    {
-        <FighterForm Fighter="currentFighter"
-                     OnSave="SaveFighter"
-                     OnCancel="RefreshFighter">
-        </FighterForm>
-    }
+                <div class="card-body">
+                    @if (currentFighter == null)
+                    {
+                        <FighterList Fighters="allFighters"
+                                     OnAdd="AddFighter"
+                                     OnEdit="EditFighter"
+                                     OnDelete="DeleteFighter">
+                        </FighterList>
+                    }
+                    else
+                    {
+                        <FighterForm Fighter="currentFighter"
+                                     OnSave="SaveFighter"
+                                     OnCancel="RefreshFighter">
+                        </FighterForm>
+                    }
+                </div>
 
-    @if (currentMatch == null)
-    {
-        <MatchList  
-                     Matches="allmatches"
-                     HasCrudRights = "true"
-                     OnAdd="AddMatch"
-                     OnEdit="EditMatch"
-                     OnDelete="DeleteMatch">
-        </MatchList>
-    }
-    else
-    {
-        <MatchForm  Match="currentMatch"
-                    AvailableFighters="allFighters"
-                    OnSave="SaveMatch"
-                    OnCancel="RefreshMatch">
-        </MatchForm>
-    }
+            </div>
+        </div>
 
+        <div class="col-lg-6">
+            <div class="card shadow-lg border-0 h-100" style="background-color: #1f2937; color:white; border-radius:16px;">
+                <div class="card-header border-0" style="background-color: #0f172a; border-radius:16px 16px 0 0;">
+                    <h3 class="mb-0">
+                        Matches
+                    </h3>
+                </div>
+
+                <div class="card-body">
+                    @if (currentMatch == null)
+                    {
+                        <MatchList Matches="allmatches"
+                                   HasCrudRights="true"
+                                   OnAdd="AddMatch"
+                                   OnEdit="EditMatch"
+                                   OnDelete="DeleteMatch">
+                        </MatchList>
+                    }
+                    else
+                    {
+                        <MatchForm Match="currentMatch"
+                                   AvailableFighters="allFighters"
+                                   OnSave="SaveMatch"
+                                   OnCancel="RefreshMatch">
+                        </MatchForm>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-
 
 @code {
     private Fighter currentFighter;
