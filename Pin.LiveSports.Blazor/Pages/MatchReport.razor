@@ -87,12 +87,12 @@
         <div class="card bg-dark border-secondary mt-4">
             <div class="card-header text-center border-0">
                 <h4 class="mb-0 text-warning">
-                    Live Match Events
+                    Live Match Events <span class="text-muted">(@AllMatchEvents.Count)</span>
                 </h4>
             </div>
 
             <div class="card-body">
-                @if (MatchEvents is null || !MatchEvents.Any())
+                @if (AllMatchEvents is null || !AllMatchEvents.Any())
                 {
                     <p class="text-muted text-center mb-0">
                         No events yet…
@@ -101,10 +101,14 @@
                 else
                 {
                     <ul class="list-group list-group-flush">
-                        @foreach (var matchEvent in MatchEvents)
+                        @foreach (var latestEvent in LatestEvents)
                         {
                             <li class="list-group-item bg-dark text-white border-secondary">
-                                @matchEvent.ToString()
+                                @if(latestEvent == LatestEvents.Last())
+                                {
+                                    <span class="fw-bold">latest: </span>
+                                }
+                                @latestEvent.ToString()
                             </li>
                         }
                     </ul>
@@ -125,7 +129,8 @@
     [Parameter]
     public Guid MatchId { get; set; }
 
-    public List<BaseMatchEvent> MatchEvents { get; set; }
+    public List<BaseMatchEvent> AllMatchEvents { get; set; }
+    public List<BaseMatchEvent> LatestEvents { get; set; }
     //
 
 
@@ -134,7 +139,8 @@
         match = await matchCrudService.GetByIdAsync(MatchId);
         blueFighter = await fighterCrudService.GetByIdAsync(match.FighterBlueTeamId);
         redFighter = await fighterCrudService.GetByIdAsync(match.FighterRedTeamId);
-        MatchEvents = new();
+        AllMatchEvents = new();
+        LatestEvents = new();
         winMessage = string.Empty;
         matchReportService.Add(this);
 
@@ -145,7 +151,7 @@
 
     public async Task AddAttackEvent(MatchAttackEvent e)
     {
-        MatchEvents.Add(e);
+        AllMatchEvents.Add(e);
         matchReportService.Update(this);
         await boxClient.AddRemoteMatchAttackEvent(e);
         RefreshMatchEvents();
@@ -153,7 +159,7 @@
 
     public async Task AddStateEvent(MatchStateEvent e)
     {
-        MatchEvents.Add(e);
+        AllMatchEvents.Add(e);
         matchReportService.Update(this);
         await boxClient.AddRemoteMatchStateEvent(e);
         RefreshMatchEvents();
@@ -161,7 +167,8 @@
 
     public void RefreshMatchEvents()
     {
-        MatchEvents = matchReportService.GetEventsByMatchId(match.Id);
+        AllMatchEvents = matchReportService.GetEventsByMatchId(match.Id);
+        LatestEvents = matchReportService.GetLatestEventsByMatchId(match.Id, 5).ToList();
     }
 
     public async Task AddMatchWinner(MatchResultEvent e)
@@ -169,7 +176,7 @@
         match.WinningFighterId = e.Fighter.Id;
         match.IsFinished = true;
 
-        MatchEvents.Add(e);
+        AllMatchEvents.Add(e);
         matchReportService.Update(this);
 
         await matchCrudService.UpdateAsync(match);
@@ -182,7 +189,7 @@
 
     public async Task AddRoundWinEvent(MatchRoundResultEvent e)
     {
-        MatchEvents.Add(e);
+        AllMatchEvents.Add(e);
         matchReportService.Update(this);
         await boxClient.AddRemoteMatchRoundResultEvent(e);
         RefreshMatchEvents();
