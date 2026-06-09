@@ -1,34 +1,95 @@
-﻿<div>
-    <div class="mb-2 d-flex justify-content-center gap-3">
+﻿<div class="container mt-4">
 
-        <div class="border border-light border-1 d-flex flex-column align-items-center p-2">
-            <div>
-                <p class="text-decoration-underline">
-                    Round manager
-                </p>
-            </div>
+    <div class="card shadow-lg border-0 mx-auto" style="max-width: 700px; background-color:#1f2937; color:white; border-radius:16px;">
 
-            <div class="border border-light border-1 d-flex flex-column align-items-center p-2">
-                <p>Round: @currentRound</p>
+        <div class="card-header text-center border-0" style="background-color:#111827; border-radius:16px 16px 0 0;">
+            <h2 class="fw-bold mb-1">
+                Match Control Center
+            </h2>
 
-                <button class="btn btn-warning mb-1" style="width: 100%; height: 100%" @onclick="() => WinRound(BlueFighter)">Blue wins round</button>
-                <button class="btn btn-warning mb-1" style="width: 100%; height: 100%" @onclick="() => WinRound(RedFighter)">Red wins round</button>
-            </div>            
+            <p class="mb-0 text-secondary">
+                Round @currentRound
+            </p>
         </div>
 
-        <div class="border border-light border-1 d-flex flex-column align-items-center p-2">
-            <div>
-                <p class="text-decoration-underline">
-                    Match manager
-                </p>
+        <div class="card-body">
+            <div class="row text-center mb-4">
+                <div class="col-6">
+                    <div class="card bg-primary border-0 text-white shadow-sm">
+                        <div class="card-body">
+                            <h5 class="fw-bold">
+                                BLUE CORNER
+                            </h5>
+                            <h1 class="display-5 fw-bold">
+                                @scoreBlue
+                            </h1>
+                            <p class="mb-0">
+                                @BlueFighter.Firstname @BlueFighter.Lastname
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="card bg-danger border-0 text-white shadow-sm">
+                        <div class="card-body">
+                            <h5 class="fw-bold">
+                                RED CORNER
+                            </h5>
+                            <h1 class="display-5 fw-bold">
+                                @scoreRed
+                            </h1>
+                            <p class="mb-0">
+                                @RedFighter.Firstname @RedFighter.Lastname
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
             </div>
-            <button class="btn btn-info mb-1" style="width: 85%;" @onclick="() => OnGrantWin(BlueFighter)">Grant win to blue</button>
-            <button class="btn btn-info mb-1" style="width: 85%;" @onclick="() => OnGrantWin(RedFighter)">Grant win to red</button>
 
-        </div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="card bg-dark text-white border-secondary h-100">
+                        <div class="card-body text-center">
+                            <h4 class="text-warning mb-3">
+                                Round Manager
+                            </h4>
+                            <p class="mb-3">
+                                Current Round:
+                                <span class="fw-bold text-info">
+                                    @currentRound
+                                </span>
+                            </p>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary fw-bold" @onclick="() => WinRound(BlueFighter)">Blue wins round</button>
+                                <button class="btn btn-danger fw-bold" @onclick="() => WinRound(RedFighter)">Red wins round</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <div>
-            <p>@testData</p>
+                <div class="col-md-6">
+                    <div class="card bg-dark text-white border-secondary h-100">
+                        <div class="card-body text-center">
+                            <h4 class="text-info mb-3">
+                                Match Manager
+                            </h4>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-outline-primary fw-bold" @onclick="() => OnGrantWin(BlueFighter)">Grant win to blue</button>
+                                <button class="btn btn-outline-danger fw-bold" @onclick="() => OnGrantWin(RedFighter)">Grant win to red</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @if (!string.IsNullOrWhiteSpace(testData))
+            {
+                <div class="alert alert-secondary mt-4 mb-0 text-center">
+                    @testData
+                </div>
+            }
         </div>
     </div>
 </div>
