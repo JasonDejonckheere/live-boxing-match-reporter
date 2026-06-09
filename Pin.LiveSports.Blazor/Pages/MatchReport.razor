@@ -5,65 +5,114 @@
 @inject IInMemoryMatchReportService matchReportService
 
 
-<h3>Match Report</h3>
-@if(match is null)
-{
-    if(winMessage is not null)
-    {
-        <p class="text-success">@winMessage</p>
-    }
-    <NavLink href="@($"/sportmanagement")" class="btn btn-success">Back to sport management page</NavLink>
-}
-else
-{
-    <div>
+<div class="container-fluid py-4" style="background-color:#111827; min-height:100vh; color:white;">
 
-        <h6>@blueFighter.Firstname @blueFighter.Lastname (@blueFighter.WeightClass)
-            <strong>VS</strong> 
-            @redFighter.Firstname @redFighter.Lastname (@redFighter.WeightClass)</h6>
-    </div>
+    <div class="mb-4 text-center">
+        <h2 class="fw-bold">
+            Match Report
+        </h2>
 
-    <div class="border border-light border-1" style="display:flex; gap: 15px;">
-        <div>
-            <h7><strong>Blue:</strong>@blueFighter.Firstname @blueFighter.Lastname</H7>
-            <FighterActionEventBoard 
-                OnAttackEvent="AddAttackEvent"
-                OnStateEvent="AddStateEvent"
-                Fighter="blueFighter"
-                MatchId="match.Id">
-            </FighterActionEventBoard>
-        </div>
-
-        <div>
-            <h7><strong>Red:</strong>@redFighter.Firstname @redFighter.Lastname</H7>
-            <FighterActionEventBoard 
-                OnAttackEvent="AddAttackEvent"
-                OnStateEvent="AddStateEvent"
-                Fighter="redFighter"
-                MatchId="match.Id">
-            </FighterActionEventBoard>
-        </div>
-
-        <MatchManager
-            MatchId="match.Id"
-            BlueFighter="blueFighter"
-            RedFighter="redFighter"
-            OnMatchWin="AddMatchWinner"
-            OnRoundWin="AddRoundWinEvent"
-        >
-
-        </MatchManager>
-        
-    </div>
-
-    <div>
-        <h2>Live Reported Events</h2>
-        @foreach (var matchEvent in MatchEvents)
+        @if (!string.IsNullOrEmpty(winMessage))
         {
-            <p>Highlight: @matchEvent.ToString()</p>
+            <div class="alert alert-success mt-3">
+                @winMessage
+            </div>
         }
+
+        @if (match is null)
+        {
+            <NavLink href="/sportmanagement" class="btn btn-success mt-3">
+                Back to Sport Management
+            </NavLink>
+        }
+
     </div>
-}
+
+    @if (match is not null)
+    {
+        <div class="text-center mb-4">
+
+            <h5 class="text-secondary">
+                @blueFighter.Firstname @blueFighter.Lastname
+                <span class="text-white fw-bold mx-2">VS</span>
+                @redFighter.Firstname @redFighter.Lastname
+            </h5>
+
+            <small class="text-muted">
+                @blueFighter.WeightClass
+            </small>
+
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="card bg-primary text-white shadow h-100">
+                    <div class="card-body">
+                        <FighterActionEventBoard Fighter="blueFighter"
+                                                 MatchId="match.Id"
+                                                 OnAttackEvent="AddAttackEvent"
+                                                 OnStateEvent="AddStateEvent">
+                        </FighterActionEventBoard>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card bg-dark text-white border-secondary shadow h-100">
+                    <div class="card-body">
+                        <MatchManager MatchId="match.Id"
+                                      BlueFighter="blueFighter"
+                                      RedFighter="redFighter"
+                                      OnMatchWin="AddMatchWinner"
+                                      OnRoundWin="AddRoundWinEvent">
+                        </MatchManager>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card bg-danger text-white shadow h-100">
+                    <div class="card-body">
+                        <FighterActionEventBoard Fighter="redFighter"
+                                                 MatchId="match.Id"
+                                                 OnAttackEvent="AddAttackEvent"
+                                                 OnStateEvent="AddStateEvent">
+                        </FighterActionEventBoard>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card bg-dark border-secondary mt-4">
+            <div class="card-header text-center border-0">
+                <h4 class="mb-0 text-warning">
+                    Live Match Events
+                </h4>
+            </div>
+
+            <div class="card-body">
+                @if (MatchEvents is null || !MatchEvents.Any())
+                {
+                    <p class="text-muted text-center mb-0">
+                        No events yet…
+                    </p>
+                }
+                else
+                {
+                    <ul class="list-group list-group-flush">
+                        @foreach (var matchEvent in MatchEvents)
+                        {
+                            <li class="list-group-item bg-dark text-white border-secondary">
+                                @matchEvent.ToString()
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+    }
+</div>
 
 @code {
     private BoxingMatch match;
