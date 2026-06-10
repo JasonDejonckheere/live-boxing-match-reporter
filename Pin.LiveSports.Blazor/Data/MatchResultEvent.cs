@@ -4,7 +4,7 @@
     {
         public override string ToString()
         {
-            return $"🏆 {Fighter.Firstname} {Fighter.Lastname} won the match!";
+            return $"{base.ToString()} 🏆 {Fighter.Firstname} {Fighter.Lastname} won the match!";
         }
     }
 }

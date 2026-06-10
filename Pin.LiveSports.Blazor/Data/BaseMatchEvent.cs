@@ -8,5 +8,10 @@ namespace Pin.LiveSports.Blazor.Data
         public Fighter Fighter { get; set; }
         public bool IsConcious { get; set; }
         public Guid MatchId { get; set; }
+        public TimeSpan Timestamp { get; set; }
+        public override string ToString()
+        {
+            return $"{Timestamp.Minutes}m {Timestamp.Seconds}s";
+        }
     }
 }

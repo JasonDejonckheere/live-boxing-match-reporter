@@ -1,5 +1,5 @@
 ﻿<div class="card shadow-lg border-0 mx-auto mt-4" 
-     style="max-width: 500px; background-color:#1f2937; color:white; border-radius: 16px;">
+style="max-width: 500px; background-color:#1f2937; color:white; border-radius: 16px;">
     @if(Fighter is null)
     {
         <div class="card-body text-center" >
@@ -56,7 +56,7 @@
             </div>
         </div>
     }
-    
+
 </div>
 
 @code {
@@ -68,13 +68,11 @@
     [Parameter]
     public Guid MatchId { get; set; }
 
-        [Parameter]
+    [Parameter]
     public EventCallback<MatchAttackEvent> OnAttackEvent { get; set; }
 
     [Parameter]
     public EventCallback<MatchStateEvent> OnStateEvent { get; set; }
-
-
 
     //had to do this cuz string value couldnt be written inside the invoke
     private async Task OnLeftUppercutClicked()

@@ -1,7 +1,7 @@
 ﻿
 namespace Pin.LiveSports.Blazor.Data
 {
-    public class MatchRoundResultEvent : MatchResultEvent
+    public class MatchRoundResultEvent : BaseMatchEvent
     {
         public int RoundNumber { get; set; }
         public int FighterScore { get; set; }
@@ -10,7 +10,7 @@ namespace Pin.LiveSports.Blazor.Data
 
         public override string ToString()
         {
-            return $"⏳ {Fighter.Firstname} {Fighter.Lastname} won round {RoundNumber} and now has a score of {FighterScore}";
+            return $"{base.ToString()} ⏳ {Fighter.Firstname} {Fighter.Lastname} won round {RoundNumber} and now has a score of {FighterScore}";
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿@page "/matchreport/{matchId:guid}"
+@using System.Diagnostics
 
 @inject ICrudService<BoxingMatch> matchCrudService
 @inject ICrudService<Fighter> fighterCrudService
@@ -49,9 +50,9 @@
                 <div class="card bg-primary text-white shadow h-100">
                     <div class="card-body">
                         <FighterActionEventBoard Fighter="blueFighter"
-                                                 MatchId="match.Id"
-                                                 OnAttackEvent="AddAttackEvent"
-                                                 OnStateEvent="AddStateEvent">
+                        MatchId="match.Id"
+                        OnAttackEvent="AddAttackEvent"
+                        OnStateEvent="AddStateEvent">
                         </FighterActionEventBoard>
                     </div>
                 </div>
@@ -61,10 +62,10 @@
                 <div class="card bg-dark text-white border-secondary shadow h-100">
                     <div class="card-body">
                         <MatchManager MatchId="match.Id"
-                                      BlueFighter="blueFighter"
-                                      RedFighter="redFighter"
-                                      OnMatchWin="AddMatchWinner"
-                                      OnRoundWin="AddRoundWinEvent">
+                        BlueFighter="blueFighter"
+                        RedFighter="redFighter"
+                        OnMatchWin="AddMatchWinner"
+                        OnRoundWin="AddRoundWinEvent">
                         </MatchManager>
                     </div>
                 </div>
@@ -75,9 +76,9 @@
                 <div class="card bg-danger text-white shadow h-100">
                     <div class="card-body">
                         <FighterActionEventBoard Fighter="redFighter"
-                                                 MatchId="match.Id"
-                                                 OnAttackEvent="AddAttackEvent"
-                                                 OnStateEvent="AddStateEvent">
+                        MatchId="match.Id"
+                        OnAttackEvent="AddAttackEvent"
+                        OnStateEvent="AddStateEvent">
                         </FighterActionEventBoard>
                     </div>
                 </div>
@@ -124,19 +125,25 @@
     private Fighter redFighter;
     private string winMessage;
     private BoxClient boxClient;
+    private Stopwatch matchTimer;
 
-    //todo: inmemory service
     [Parameter]
     public Guid MatchId { get; set; }
 
     public List<BaseMatchEvent> AllMatchEvents { get; set; }
     public List<BaseMatchEvent> LatestEvents { get; set; }
-    //
 
 
     protected override async Task OnInitializedAsync()
     {
         match = await matchCrudService.GetByIdAsync(MatchId);
+
+        if(match != null)
+        {
+            matchTimer = new Stopwatch();
+            matchTimer.Start();
+        }
+
         blueFighter = await fighterCrudService.GetByIdAsync(match.FighterBlueTeamId);
         redFighter = await fighterCrudService.GetByIdAsync(match.FighterRedTeamId);
         AllMatchEvents = new();
@@ -146,11 +153,16 @@
 
         boxClient = new BoxClient();
         await boxClient.Start();
+    }
 
+    private TimeSpan GetElapsedTime()
+    {
+        return matchTimer.Elapsed;
     }
 
     public async Task AddAttackEvent(MatchAttackEvent e)
     {
+        e.Timestamp = GetElapsedTime();
         AllMatchEvents.Add(e);
         matchReportService.Update(this);
         await boxClient.AddRemoteMatchAttackEvent(e);
@@ -159,6 +171,7 @@
 
     public async Task AddStateEvent(MatchStateEvent e)
     {
+        e.Timestamp = GetElapsedTime();
         AllMatchEvents.Add(e);
         matchReportService.Update(this);
         await boxClient.AddRemoteMatchStateEvent(e);
@@ -175,6 +188,7 @@
     {
         match.WinningFighterId = e.Fighter.Id;
         match.IsFinished = true;
+        e.Timestamp = GetElapsedTime();
 
         AllMatchEvents.Add(e);
         matchReportService.Update(this);
@@ -189,6 +203,7 @@
 
     public async Task AddRoundWinEvent(MatchRoundResultEvent e)
     {
+        e.Timestamp = GetElapsedTime();
         AllMatchEvents.Add(e);
         matchReportService.Update(this);
         await boxClient.AddRemoteMatchRoundResultEvent(e);
