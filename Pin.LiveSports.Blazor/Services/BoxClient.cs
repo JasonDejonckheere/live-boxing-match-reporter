@@ -16,8 +16,11 @@ namespace Pin.LiveSports.Blazor.Services
 
         public BoxClient()
         {
+            //var timeOutTime = new TimeSpan(70000);
             connection = new HubConnectionBuilder()
                 .WithUrl("https://localhost:7005/sporthub")
+                //next line below i used for implementation of new in .net 8
+                //.WithServerTimeout(timeOutTime)
                 .Build();
         }
 
