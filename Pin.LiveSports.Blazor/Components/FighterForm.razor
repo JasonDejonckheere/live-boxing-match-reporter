@@ -1,21 +1,21 @@
 ﻿<EditForm Model="@Fighter" OnValidSubmit="@(e => OnSave.InvokeAsync(Fighter))">
     <DataAnnotationsValidator />
     <ValidationSummary />
-    <div class="form-group">
+    <div class="form-group my-2">
         <label for="firstname">First name: </label>
         <InputText id="firstname" class="form-control"
                    @bind-Value="Fighter.Firstname" />
         <ValidationMessage For="@(() => Fighter.Firstname)" />
     </div>
 
-    <div class="form-group">
+    <div class="form-group my-2">
         <label for="lastname">Last name: </label>
         <InputText id="lastname" class="form-control"
                    @bind-Value="Fighter.Lastname" />
         <ValidationMessage For="@(() => Fighter.Lastname)" />
     </div>
 
-    <div class="form-group">
+    <div class="form-group my-3">
         <label for="weightclass">Weight class: </label>
         <InputSelect @bind-Value="Fighter.WeightClass">
             @foreach(var weightType in Enum.GetValues<WeightType>())
@@ -25,8 +25,10 @@
         </InputSelect>
         <ValidationMessage For="@(() => Fighter.WeightClass)" />
     </div>
-    <button type="submit" class="btn btn-primary">Save</button>
-    <button type="button" class="btn btn-warning" @onclick="OnCancel">Cancel</button>
+    <div class="my-3">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-warning" @onclick="OnCancel">Cancel</button>
+    </div>
 </EditForm>
 
 @code {
