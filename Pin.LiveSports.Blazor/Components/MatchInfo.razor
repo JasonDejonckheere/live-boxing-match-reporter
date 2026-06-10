@@ -1,4 +1,5 @@
-﻿@using Pin.LiveSports.Blazor.Pages
+﻿@using Microsoft.AspNetCore.Components.QuickGrid
+@using Pin.LiveSports.Blazor.Pages
 @inject IInMemoryMatchReportService inMemoryMatchReportService
 
 @if(Match is null)
@@ -38,9 +39,11 @@ else
                                 </div>
                             </li>
                         }
-                        @* }
-                        @foreach(var e in matchEvents)
-                        { *@
+
+                        @* I used this as my new in .Net8 itemm *@
+                        <QuickGrid Items="matchEvents.AsQueryable()">
+                            <PropertyColumn Property="@(p => p.ToString())" Sortable="true" />
+                        </QuickGrid>
                             
                     </ul>
                 }
