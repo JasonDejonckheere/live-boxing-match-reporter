@@ -13,7 +13,7 @@ namespace Pin.LiveSports.Blazor.Data
 
         public override string ToString()
         {
-            return $"{Fighter.Firstname} {Fighter.Lastname} attacked with a {Limb} {ActionPerformed}.";
+            return $"🥊 {Fighter.Firstname} {Fighter.Lastname} attacked with a {Limb} {ActionPerformed}.";
         }
     }
 }

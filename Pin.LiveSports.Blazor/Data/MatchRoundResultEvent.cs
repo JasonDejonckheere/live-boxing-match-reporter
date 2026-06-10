@@ -8,7 +8,7 @@ namespace Pin.LiveSports.Blazor.Data
 
         public override string ToString()
         {
-            return $"{Fighter.Firstname} {Fighter.Lastname} won round {RoundNumber} and now has a score of {FighterScore}";
+            return $"⏳ {Fighter.Firstname} {Fighter.Lastname} won round {RoundNumber} and now has a score of {FighterScore}";
         }
     }
 }
