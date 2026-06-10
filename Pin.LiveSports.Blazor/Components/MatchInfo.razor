@@ -41,7 +41,7 @@ else
                         } *@
 
                         @* I used this as my new in .Net8 itemm *@
-                        <QuickGrid Items="matchEvents.AsQueryable()">
+                        <QuickGrid Class="list-group-item py-1" Items="matchEvents.AsQueryable()">
                             <PropertyColumn Property="@(p => p.ToString())" Sortable="false" />
                         </QuickGrid>
                             

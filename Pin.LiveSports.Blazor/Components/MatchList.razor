@@ -1,5 +1,4 @@
-﻿<h3 class="mt-4">@PageTitle</h3>
-
+﻿
 @if (HasCrudRights)
 {
     <button class="btn btn-primary mb-4 mt-4" @onclick="OnAdd">Add Match</button>    
@@ -82,9 +81,6 @@ else
 
 
 @code {
-    [Parameter]
-    public string PageTitle { get; set; } = "All boxing games";
-
     [Parameter]
     public bool HasCrudRights { get; set; } = false;
 
