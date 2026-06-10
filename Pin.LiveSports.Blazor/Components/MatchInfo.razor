@@ -27,7 +27,7 @@ else
                 else
                 {
                     <ul class="list-group list-group-flush">
-                        @for(int i = 1; i <= matchEvents.Count; i++)
+                        @* @for(int i = 1; i <= matchEvents.Count; i++)
                         {
                             <li class="list-group-item py-1">
                                 <div class="d-flex justify-content-between align-content-lg-center">
@@ -38,11 +38,11 @@ else
                                     </div>
                                 </div>
                             </li>
-                        }
+                        } *@
 
                         @* I used this as my new in .Net8 itemm *@
                         <QuickGrid Items="matchEvents.AsQueryable()">
-                            <PropertyColumn Property="@(p => p.ToString())" Sortable="true" />
+                            <PropertyColumn Property="@(p => p.ToString())" Sortable="false" />
                         </QuickGrid>
                             
                     </ul>
@@ -79,7 +79,7 @@ else
         if(Match.Id == e.MatchId)
         {
             // matchEvents.Add(e);
-            matchEvents = inMemoryMatchReportService.GetEventsByMatchId(e.MatchId);
+            matchEvents = inMemoryMatchReportService.GetEventsByMatchId(e.MatchId) ;
 
             //otherwise app crashed cuz not on same thread
             await InvokeAsync(() =>
