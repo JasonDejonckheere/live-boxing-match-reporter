@@ -14,6 +14,13 @@ else
         <div class="card shadow">
             <div class="card-header bg-dark text-white">
                 <h3 class="mb-0 text-center">Match highlight events:</h3>
+                <h5 class="my-2 text-center">
+                    @Match.FighterBlueTeam.Firstname @Match.FighterBlueTeam.Lastname <span class="fw-bold" style="color: dodgerblue;">@scoreBlue </span>
+                    
+                    <span class="fw-bold">VS</span> 
+                    <span class="fw-bold" style="color: red;"> @scoreRed</span> @Match.FighterRedTeam.Firstname @Match.FighterRedTeam.Lastname
+                    
+                </h5>
             </div>
 
             <div class="card-body">
@@ -55,6 +62,8 @@ else
 
 @code {
     private List<BaseMatchEvent> matchEvents;
+    private int scoreBlue = 0;
+    private int scoreRed = 0;
     private BoxClient boxClient;
 
     [Parameter]
@@ -121,6 +130,8 @@ else
         {
             // matchEvents.Add(e);
             matchEvents = inMemoryMatchReportService.GetEventsByMatchId(e.MatchId);
+            scoreBlue = e.ScoreBlue;
+            scoreRed = e.ScoreRed;
 
             //otherwise app crashed cuz not on same thread
             await InvokeAsync(() =>

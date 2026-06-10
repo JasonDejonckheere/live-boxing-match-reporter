@@ -84,10 +84,10 @@
                 </div>
             </div>
 
-            @if (!string.IsNullOrWhiteSpace(testData))
+            @if (!string.IsNullOrWhiteSpace(RoundWinMessage))
             {
                 <div class="alert alert-secondary mt-4 mb-0 text-center">
-                    @testData
+                    @RoundWinMessage
                 </div>
             }
         </div>
@@ -96,7 +96,7 @@
 
 @code {
     private int currentRound = 1;
-    private string testData;
+    private string RoundWinMessage;
     private int scoreBlue = 0;
     private int scoreRed = 0;
 
@@ -139,7 +139,7 @@
         }
 
         OnGrantRoundWin(fighter, score);
-        testData = $"{fighter.Firstname} {fighter.Lastname} wins round {currentRound}.\bBlue: {scoreBlue}\bRed: {scoreRed}";
+        RoundWinMessage = $"{fighter.Firstname} {fighter.Lastname} wins round {currentRound}.";
         currentRound++;
     }
 
@@ -162,7 +162,9 @@
                 MatchId = this.MatchId,
                 Fighter = fighter,
                 RoundNumber = currentRound,
-                FighterScore = score
+                FighterScore = score,
+                ScoreBlue = scoreBlue,
+                ScoreRed = scoreRed
             }
         );
     }
