@@ -41,9 +41,9 @@ namespace Pin.LiveSports.Application.Services
             await _dbFighterCrudService.DeleteAsync(fighter);
         }
 
-        public Task<Fighter[]> GetAllFightersAsync() => _dbFighterCrudService.GetAllAsync();
+        public async Task<Fighter[]> GetAllFightersAsync() => await _dbFighterCrudService.GetAllAsync();
 
-        public Task<Fighter> GetFighterByIdAsync(Guid id) => _dbFighterCrudService.GetByIdAsync(id);
+        public async Task<Fighter> GetFighterByIdAsync(Guid id) => await _dbFighterCrudService.GetByIdAsync(id);
 
         public async Task UpdateFighterAsync(Fighter fighter)
         {
