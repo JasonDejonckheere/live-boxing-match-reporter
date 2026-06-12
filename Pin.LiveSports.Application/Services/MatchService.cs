@@ -28,15 +28,9 @@ namespace Pin.LiveSports.Application.Services
             throw new NotImplementedException();
         }
 
-        public Task<BoxingMatch[]> GetAllMatchesAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<BoxingMatch[]> GetAllMatchesAsync() => await _dbMatchCrudService.GetAllAsync();
 
-        public Task<BoxingMatch> GetMatchByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<BoxingMatch> GetMatchByIdAsync(Guid id) => await _dbMatchCrudService.GetByIdAsync(id);
 
         public Task UpdateMatchAsync(BoxingMatch match)
         {
