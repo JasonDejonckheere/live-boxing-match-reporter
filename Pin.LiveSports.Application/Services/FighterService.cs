@@ -2,6 +2,7 @@
 using Pin.LiveSports.Core.Entities;
 using Pin.LiveSports.Core.Enums;
 using Pin.LiveSports.Core.Interfaces;
+using Pin.LiveSports.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,13 @@ namespace Pin.LiveSports.Application.Services
     public class FighterService : IFighterService
     {
         private readonly ICrudService<Fighter> _dbFighterCrudService;
+        private readonly ICrudService<BoxingMatch> _dbMatchCrudService;
 
-        public FighterService(ICrudService<Fighter> dbFighterCrudService)
+
+        public FighterService(ICrudService<Fighter> dbFighterCrudService, ICrudService<BoxingMatch> dbMatchCrudService)
         {
             _dbFighterCrudService = dbFighterCrudService;
+            _dbMatchCrudService = dbMatchCrudService;
         }
 
         public async Task AddFighterAsync(Fighter fighter)
@@ -26,24 +30,27 @@ namespace Pin.LiveSports.Application.Services
             await _dbFighterCrudService.AddAsync(fighter);
         }
 
-        public Task DeleteFighterAsync(Fighter fighter)
+        public async Task DeleteFighterAsync(Fighter fighter)
         {
-            throw new NotImplementedException();
+            var matchesArray = await _dbMatchCrudService.GetAllAsync();
+            List<BoxingMatch> allMatches = matchesArray.ToList();
+            if (allMatches.Any(m => m.FighterBlueTeam == fighter) || allMatches.Any(m => m.FighterRedTeam == fighter))
+            {
+                throw new Exception($"Can't delete fighter {fighter.Firstname} {fighter.Lastname} ({fighter.WeightClass}) with id {fighter.Id}. Fighter in a match.");
+            }
+            await _dbFighterCrudService.DeleteAsync(fighter);
         }
 
-        public Task<Fighter[]> GetAllFightersAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public Task<Fighter[]> GetAllFightersAsync() => _dbFighterCrudService.GetAllAsync();
 
-        public Task<Fighter> GetFighterByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+        public Task<Fighter> GetFighterByIdAsync(Guid id) => _dbFighterCrudService.GetByIdAsync(id);
 
-        public Task UpdateFighterAsync(Fighter fighter)
+        public async Task UpdateFighterAsync(Fighter fighter)
         {
-            throw new NotImplementedException();
+            var existing = await GetFighterByIdAsync(fighter.Id);
+            if (existing is null) throw new Exception($"Updating failed. Fighter does not exist.");
+            if (string.IsNullOrEmpty(fighter.Firstname)) throw new Exception($"{nameof(fighter.Firstname)} must be provided");
+            if (string.IsNullOrEmpty(fighter.Lastname)) throw new Exception($"{nameof(fighter.Lastname)} must be provided");
         }
     }
 }

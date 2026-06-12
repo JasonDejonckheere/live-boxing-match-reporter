@@ -99,7 +99,7 @@
     //fighter
     public async Task RefreshFighter()
     {
-        allFighters = await fighterCrudService.GetAllAsync();
+        allFighters = await fighterService.GetAllFightersAsync();
         currentFighter = null;
     }
 
@@ -110,19 +110,21 @@
 
     public async Task EditFighter(Fighter fighter)
     {
-        this.currentFighter = await fighterCrudService.GetByIdAsync(fighter.Id);
+        this.currentFighter = await fighterService.GetFighterByIdAsync(fighter.Id);
     }
 
     public async Task DeleteFighter(Fighter fighter)
     {
-        if(allmatches.Any(m => m.FighterBlueTeam == fighter) || allmatches.Any(m => m.FighterRedTeam == fighter))
+        try
         {
-            errorMessage = $"Can't delete fighter {fighter.Firstname} {fighter.Lastname} ({fighter.WeightClass}) with id {fighter.Id}. Fighter in a match.";
-            return;
+            await fighterService.DeleteFighterAsync(fighter);
+            await RefreshFighter();
         }
-        await fighterCrudService.DeleteAsync(fighter);
-        await RefreshFighter();
-        // this.StateHasChanged();            
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+        
     }
 
     public async Task SaveFighter(Fighter fighter)
@@ -131,13 +133,12 @@
         {
             if (fighter.Id == Guid.Empty)
             {
-                await fighterCrudService.AddAsync(fighter);
+                await fighterService.AddFighterAsync(fighter);
             }
             else
             {
-                await fighterCrudService.UpdateAsync(fighter);
+                await fighterService.UpdateFighterAsync(fighter);
             }
-
             await RefreshFighter();
         }
         catch (Exception ex)
@@ -150,7 +151,7 @@
 
     public async Task RefreshMatch()
     {
-        allmatches = await matchCrudService.GetAllAsync();
+        allmatches = await matchService.GetAllAsync();
         currentMatch = null;
     }
 
