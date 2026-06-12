@@ -16,11 +16,13 @@ namespace Pin.LiveSports.Blazor.Services
 
         public BoxClient()
         {
-            //var timeOutTime = new TimeSpan(70000);
             connection = new HubConnectionBuilder()
                 .WithUrl("https://localhost:7005/sporthub")
                 //next line below i used for implementation of new in .net 8
-                //.WithServerTimeout(timeOutTime)
+                //if im correct this tries to send a signal to the server based on the keepAliveInterval(30 seconds) and if there is no response from the server
+                // (here SportHub) within the ServerTimeout (60s) then the connection is broken and an error is returned to the client
+                .WithServerTimeout(TimeSpan.FromSeconds(60))
+                .WithKeepAliveInterval(TimeSpan.FromSeconds(30))
                 .Build();
         }
 
