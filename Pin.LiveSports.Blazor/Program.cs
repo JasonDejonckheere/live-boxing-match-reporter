@@ -8,6 +8,8 @@ using Pin.LiveSports.Infrastructure.Services;
 using Pin.LiveSports.Core.Interfaces;
 using Pin.LiveSports.Blazor.Services;
 using Pin.LiveSports.Blazor.Services.Interfaces;
+using Pin.LiveSports.Application.Services;
+using Pin.LiveSports.Application.Services.Interfaces;
 
 namespace Pin.LiveSports.Blazor
 {
@@ -25,9 +27,13 @@ namespace Pin.LiveSports.Blazor
                 options.UseSqlServer(connectionString: builder.Configuration.GetConnectionString("BoxingDb")));
 
             //di
+            //db
             builder.Services.AddScoped<ICrudService<Fighter>, FighterDbCrudService>();
             builder.Services.AddScoped<ICrudService<BoxingMatch>, BoxingMatchDbCrudService>();
+            //ui in memory
             builder.Services.AddSingleton<IInMemoryMatchReportService, InMemoryMatchReportService>();
+            //business logic
+            builder.Services.AddScoped<IFighterService ,FighterService>();
 
 
 

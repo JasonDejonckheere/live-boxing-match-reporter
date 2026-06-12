@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pin.LiveSports.Application
+namespace Pin.LiveSports.Application.Services.Interfaces
 {
-    internal class MatchService
+    public interface IFighterService
     {
     }
 }

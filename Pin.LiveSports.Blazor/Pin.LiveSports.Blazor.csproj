@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Pin.LiveSports.Application\Pin.LiveSports.Application.csproj" />
     <ProjectReference Include="..\Pin.LiveSports.Infrastructure\Pin.LiveSports.Infrastructure.csproj" />
   </ItemGroup>
 

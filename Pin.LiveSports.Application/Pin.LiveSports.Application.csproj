@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Pin.LiveSports.Core\Pin.LiveSports.Core.csproj" />
+    <ProjectReference Include="..\Pin.LiveSports.Infrastructure\Pin.LiveSports.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
