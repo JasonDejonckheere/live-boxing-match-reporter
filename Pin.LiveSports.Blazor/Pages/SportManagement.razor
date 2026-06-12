@@ -161,8 +161,15 @@
 
     public async Task DeleteMatch(BoxingMatch match)
     {
-        await matchService.DeleteMatchAsync(match);
-        await RefreshMatch();
+        try
+        {
+            await matchService.DeleteMatchAsync(match);
+            await RefreshMatch();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
     }
 
     public async Task SaveMatch(BoxingMatch match)
