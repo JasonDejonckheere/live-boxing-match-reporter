@@ -135,10 +135,14 @@
         if (currentRound >= 13)
         {
             Fighter winner = scoreBlue > scoreRed ? BlueFighter : RedFighter;
+            OnGrantRoundWin(fighter, score);
             OnGrantWin(winner);
         }
+        else
+        {
+            OnGrantRoundWin(fighter, score);            
+        }
 
-        OnGrantRoundWin(fighter, score);
         RoundWinMessage = $"{fighter.Firstname} {fighter.Lastname} wins round {currentRound}.";
         currentRound++;
     }
