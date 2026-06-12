@@ -11,8 +11,7 @@ namespace Pin.LiveSports.Application.Services.Interfaces
     {
         Task<BoxingMatch[]> GetAllMatchesAsync();
         Task<BoxingMatch> GetMatchByIdAsync(Guid id);
-        Task AddMatchAsync(BoxingMatch match);
-        Task UpdateMatchAsync(BoxingMatch match);
+        Task SaveMatchAsync(BoxingMatch match);
         Task DeleteMatchAsync(BoxingMatch match);
     }
 }

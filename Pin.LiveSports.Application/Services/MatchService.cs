@@ -18,23 +18,32 @@ namespace Pin.LiveSports.Application.Services
             _dbMatchCrudService = dbMatchCrudService;
         }
 
-        public Task AddMatchAsync(BoxingMatch match)
+        public async Task DeleteMatchAsync(BoxingMatch match)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteMatchAsync(BoxingMatch match)
-        {
-            throw new NotImplementedException();
+            var allMatches = await GetAllMatchesAsync();
+            var allMatchesList = allMatches.ToList();
+            if (!allMatches.Any(m => m.Id == match.Id)) throw new Exception($"Match deletion failed. Match does not exist");
+            await _dbMatchCrudService.DeleteAsync(match);
         }
 
         public async Task<BoxingMatch[]> GetAllMatchesAsync() => await _dbMatchCrudService.GetAllAsync();
 
         public async Task<BoxingMatch> GetMatchByIdAsync(Guid id) => await _dbMatchCrudService.GetByIdAsync(id);
 
-        public Task UpdateMatchAsync(BoxingMatch match)
+        public async Task SaveMatchAsync(BoxingMatch match)
         {
-            throw new NotImplementedException();
+            //todo match validation
+            if (match.FighterBlueTeamId == Guid.Empty) throw new Exception($"Match requires a blue team fighter");
+            if (match.FighterRedTeamId == Guid.Empty) throw new Exception($"Match requires a red team fighter");
+
+            if (match.Id == Guid.Empty)
+            {
+                await _dbMatchCrudService.AddAsync(match);
+            }
+            else
+            {
+                await _dbMatchCrudService.UpdateAsync(match);
+            }
         }
     }
 }

@@ -124,7 +124,7 @@
         {
             errorMessage = ex.Message;
         }
-        
+
     }
 
     public async Task SaveFighter(Fighter fighter)
@@ -151,7 +151,7 @@
 
     public async Task RefreshMatch()
     {
-        allmatches = await matchService.GetAllAsync();
+        allmatches = await matchService.GetAllMatchesAsync();
         currentMatch = null;
     }
 
@@ -163,12 +163,12 @@
 
     public async Task EditMatch(BoxingMatch Match)
     {
-        this.currentMatch = await matchCrudService.GetByIdAsync(Match.Id);
+        this.currentMatch = await matchService.GetMatchByIdAsync(Match.Id);
     }
 
     public async Task DeleteMatch(BoxingMatch match)
     {
-        await matchCrudService.DeleteAsync(match);
+        await matchService.DeleteMatchAsync(match);
         await RefreshMatch();
     }
 
@@ -176,20 +176,12 @@
     {
         try
         {
-            if (match.Id == Guid.Empty)
-            {
-                await matchCrudService.AddAsync(match);
-            }
-            else
-            {
-                await matchCrudService.UpdateAsync(match);
-            }
-
+            await matchService.SaveMatchAsync(match);
             await RefreshMatch();
         }
         catch (Exception ex)
         {
-            errorMessage = $"Failed to save match: {ex.Message}";
+            errorMessage = ex.Message;
         }
     }
 
