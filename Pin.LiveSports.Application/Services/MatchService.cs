@@ -17,5 +17,30 @@ namespace Pin.LiveSports.Application.Services
         {
             _dbMatchCrudService = dbMatchCrudService;
         }
+
+        public Task AddMatchAsync(BoxingMatch match)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteMatchAsync(BoxingMatch match)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<BoxingMatch[]> GetAllMatchesAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<BoxingMatch> GetMatchByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateMatchAsync(BoxingMatch match)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
