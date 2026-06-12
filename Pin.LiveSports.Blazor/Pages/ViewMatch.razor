@@ -1,6 +1,6 @@
 ﻿@page "/viewmatch"
 
-@inject ICrudService<BoxingMatch> matchService;
+@inject IMatchService matchService;
 
 
 
@@ -42,8 +42,7 @@ else
 
     private async Task RefreshMatches()
     {
-        allMatches = await matchService
-            .GetAllAsync();
+        allMatches = await matchService.GetAllMatchesAsync();
         currentMatchViewed = null;
     }
 

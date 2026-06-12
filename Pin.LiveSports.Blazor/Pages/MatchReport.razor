@@ -1,8 +1,8 @@
 ﻿@page "/matchreport/{matchId:guid}"
 @using System.Diagnostics
 
-@inject ICrudService<BoxingMatch> matchCrudService
-@inject ICrudService<Fighter> fighterCrudService
+@inject IMatchService matchService
+@inject IFighterService fighterService
 @inject IInMemoryMatchReportService matchReportService
 
 
@@ -136,7 +136,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        match = await matchCrudService.GetByIdAsync(MatchId);
+        match = await matchService.GetMatchByIdAsync(MatchId);
 
         if(match != null)
         {
@@ -144,8 +144,8 @@
             matchTimer.Start();
         }
 
-        blueFighter = await fighterCrudService.GetByIdAsync(match.FighterBlueTeamId);
-        redFighter = await fighterCrudService.GetByIdAsync(match.FighterRedTeamId);
+        blueFighter = await fighterService.GetFighterByIdAsync(match.FighterBlueTeamId);
+        redFighter = await fighterService.GetFighterByIdAsync(match.FighterRedTeamId);
         AllMatchEvents = new();
         LatestEvents = new();
         winMessage = string.Empty;
@@ -193,7 +193,7 @@
         AllMatchEvents.Add(e);
         matchReportService.Update(this);
 
-        await matchCrudService.UpdateAsync(match);
+        await matchService.SaveMatchAsync(match);
 
         await boxClient.AddRemoteMatchResultEvent(e);
 

@@ -131,14 +131,7 @@
     {
         try
         {
-            if (fighter.Id == Guid.Empty)
-            {
-                await fighterService.AddFighterAsync(fighter);
-            }
-            else
-            {
-                await fighterService.UpdateFighterAsync(fighter);
-            }
+            await fighterService.SaveFighterAsync(fighter);
             await RefreshFighter();
         }
         catch (Exception ex)

@@ -23,10 +23,18 @@ namespace Pin.LiveSports.Application.Services
             _dbMatchCrudService = dbMatchCrudService;
         }
 
-        public async Task AddFighterAsync(Fighter fighter)
+        public async Task SaveFighterAsync(Fighter fighter)
         {
             if (string.IsNullOrEmpty(fighter.Firstname)) throw new Exception($"{nameof(fighter.Firstname)} must be provided");
             if (string.IsNullOrEmpty(fighter.Lastname)) throw new Exception($"{nameof(fighter.Lastname)} must be provided");
+            if (fighter.Id == Guid.Empty)
+            {
+                await _dbFighterCrudService.AddAsync(fighter);
+            }
+            else
+            {
+                await _dbFighterCrudService.AddAsync(fighter);
+            }
             await _dbFighterCrudService.AddAsync(fighter);
         }
 

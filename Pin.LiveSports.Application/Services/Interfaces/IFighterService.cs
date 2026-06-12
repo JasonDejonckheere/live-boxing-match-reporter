@@ -11,8 +11,7 @@ namespace Pin.LiveSports.Application.Services.Interfaces
     {
         Task<Fighter[]> GetAllFightersAsync();
         Task<Fighter> GetFighterByIdAsync(Guid id);
-        Task AddFighterAsync(Fighter fighter);
-        Task UpdateFighterAsync(Fighter fighter);
+        Task SaveFighterAsync(Fighter fighter);
         Task DeleteFighterAsync(Fighter fighter);
     }
 }
