@@ -15,6 +15,7 @@
     {
         <div class="alert alert-danger shadow-sm">
             @errorMessage
+                <button class="btn bg-transparent text-muted fw-bold" @onclick="RemoveError" >X</button>
         </div>
     }
 
@@ -31,16 +32,16 @@
                     @if (currentFighter == null)
                     {
                         <FighterList Fighters="allFighters"
-                                     OnAdd="AddFighter"
-                                     OnEdit="EditFighter"
-                                     OnDelete="DeleteFighter">
+                        OnAdd="AddFighter"
+                        OnEdit="EditFighter"
+                        OnDelete="DeleteFighter">
                         </FighterList>
                     }
                     else
                     {
                         <FighterForm Fighter="currentFighter"
-                                     OnSave="SaveFighter"
-                                     OnCancel="RefreshFighter">
+                        OnSave="SaveFighter"
+                        OnCancel="RefreshFighter">
                         </FighterForm>
                     }
                 </div>
@@ -60,18 +61,18 @@
                     @if (currentMatch == null)
                     {
                         <MatchList Matches="allmatches"
-                                   HasCrudRights="true"
-                                   OnAdd="AddMatch"
-                                   OnEdit="EditMatch"
-                                   OnDelete="DeleteMatch">
+                        HasCrudRights="true"
+                        OnAdd="AddMatch"
+                        OnEdit="EditMatch"
+                        OnDelete="DeleteMatch">
                         </MatchList>
                     }
                     else
                     {
                         <MatchForm Match="currentMatch"
-                                   AvailableFighters="allFighters"
-                                   OnSave="SaveMatch"
-                                   OnCancel="RefreshMatch">
+                        AvailableFighters="allFighters"
+                        OnSave="SaveMatch"
+                        OnCancel="RefreshMatch">
                         </MatchForm>
                     }
                 </div>
@@ -87,15 +88,12 @@
     private BoxingMatch currentMatch;
     private BoxingMatch[] allmatches;
 
-
     private string errorMessage;
 
     protected override async Task OnInitializedAsync()
     {
         await RefreshFighter();
         await RefreshMatch();
-
-
     }
 
     //fighter
@@ -117,8 +115,14 @@
 
     public async Task DeleteFighter(Fighter fighter)
     {
+        if(allmatches.Any(m => m.FighterBlueTeam == fighter) || allmatches.Any(m => m.FighterRedTeam == fighter))
+        {
+            errorMessage = $"Can't delete fighter {fighter.Firstname} {fighter.Lastname} ({fighter.WeightClass}) with id {fighter.Id}. Fighter in a match.";
+            return;
+        }
         await fighterCrudService.DeleteAsync(fighter);
         await RefreshFighter();
+        // this.StateHasChanged();            
     }
 
     public async Task SaveFighter(Fighter fighter)
@@ -186,5 +190,10 @@
         {
             errorMessage = $"Failed to save match: {ex.Message}";
         }
+    }
+
+    private void RemoveError()
+    {
+        errorMessage = string.Empty;
     }
 }
