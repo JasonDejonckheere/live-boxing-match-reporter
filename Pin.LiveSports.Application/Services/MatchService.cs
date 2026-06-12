@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Pin.LiveSports.Application.Services.Interfaces;
+using Pin.LiveSports.Core.Entities;
+using Pin.LiveSports.Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +9,13 @@ using System.Threading.Tasks;
 
 namespace Pin.LiveSports.Application.Services
 {
-    internal class MatchService
+    public class MatchService : IMatchService
     {
+        private readonly ICrudService<BoxingMatch> _dbMatchCrudService;
+
+        public MatchService(ICrudService<BoxingMatch> dbMatchCrudService)
+        {
+            _dbMatchCrudService = dbMatchCrudService;
+        }
     }
 }

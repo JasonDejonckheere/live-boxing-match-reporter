@@ -34,6 +34,7 @@ namespace Pin.LiveSports.Blazor
             builder.Services.AddSingleton<IInMemoryMatchReportService, InMemoryMatchReportService>();
             //business logic
             builder.Services.AddScoped<IFighterService ,FighterService>();
+            builder.Services.AddScoped<IMatchService, MatchService>();
 
 
 
