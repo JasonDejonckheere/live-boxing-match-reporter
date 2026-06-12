@@ -20,9 +20,7 @@ namespace Pin.LiveSports.Application.Services
 
         public async Task DeleteMatchAsync(BoxingMatch match)
         {
-            var allMatches = await GetAllMatchesAsync();
-            var allMatchesList = allMatches.ToList();
-            if (!allMatches.Any(m => m.Id == match.Id)) throw new Exception($"Match deletion failed. Match does not exist");
+            if (await GetMatchByIdAsync(match.Id) is null) throw new Exception($"Match deletion failed. Match does not exist");
             await _dbMatchCrudService.DeleteAsync(match);
         }
 
